@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html; charset=Big5" http-equiv="content-type">
+        <script type="text/javascript" src="js/tetrix.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                var tetrixBox = new TetrixBox(4, 4, 25, 25);
+        
+                var images = [];
+                for(var i = 0; i < 7; i++) {
+                    images[i] = new Image();
+                    images[i].src = 'images/' + (i + 1) + '.jpg';
+                }
+        
+                tetrixBox.setTetrixImages(images);
+                tetrixBox.setBackgroundColor(new Color(255, 255, 255));
+                tetrixBox.setBlockBorder(false);
+                
+                var canvas1 = document.getElementById('canvas1');
+                canvas1.width = tetrixBox.getWidth();
+                canvas1.height = tetrixBox.getHeight();
+                
+                var context1 = canvas1.getContext('2d');
+                setTimeout(function() {
+                    tetrixBox.generate();
+                    tetrixBox.paint(context1);
+                    setTimeout(arguments.callee, 1000);
+                }, 1000);
+            };
+        </script>
+    </head>
+    <body>       
+        <canvas id="canvas1"></canvas>
+    </body>
+</html>

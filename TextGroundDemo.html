@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html; charset=Big5" http-equiv="content-type">
+        <script type="text/javascript" src="js/tetrix.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {        
+                var tetrixBox = new TetrixBox(4, 4, 25, 25);
+        
+                var images = [];
+                for(var i = 0; i < 7; i++) {
+                    images[i] = new Image();
+                    images[i].src = 'images/' + (i + 1) + '.jpg';
+                }
+        
+                tetrixBox.setBackgroundColor(new Color(0, 0, 0));
+                tetrixBox.setTetrixImages(images);
+                tetrixBox.generate();
+        
+                var tetrixGround = new TetrixGround(10, 20);
+                tetrixGround.addPieceOfType(tetrixBox.getTetrixPiece().getType());
+        
+                var stackArea = new TetrixStackArea(tetrixBox, tetrixGround);
+                var canvas1 = document.getElementById('canvas1');
+                canvas1.width = stackArea.getWidth();
+                canvas1.height = stackArea.getHeight();
+                
+                var context = canvas1.getContext('2d');
+                
+                setTimeout(function() {
+                    if(tetrixGround.isMovable(0, 1)) {
+                        tetrixGround.moveTetrixRight();
+                        tetrixGround.moveTetrixDown();
+                        tetrixGround.updateGround();
+                        stackArea.paint(context);
+                    }
+                    else {
+                        tetrixGround.addPieceOfType(tetrixBox.getTetrixPiece().getType());
+                        tetrixBox.generate();
+                    }
+                    
+                    setTimeout(arguments.callee, 100);
+                }, 100);
+            };
+        </script>
+    </head>
+    <body>       
+        <canvas id="canvas1" style="border-width: 1px; border-style: solid;"></canvas>
+    </body>
+</html>
