@@ -1,10 +1,12 @@
-function TetrixPiece(type) {
+class TetrixPiece {
+    constructor(type) {
+        this.type = type;
+        this.blocks = TetrixPiece.blocks[type].reduce((acc, block) => acc.concat([block.concat()]), []);
+    }
 
-    let blocks = TetrixPiece.blocks[type].reduce((acc, block) => acc.concat([block.concat()]), []);
-
-    this.rotateLeft = function() {
+    rotateLeft() {
         // do not rotate O piece
-        if(type == TetrixPiece.O) {
+        if(this.type == TetrixPiece.O) {
             return;
         }
         var tmp;
@@ -15,9 +17,9 @@ function TetrixPiece(type) {
         }
     };
 
-    this.rotateRight = function() {
+    rotateRight() {
         // do not rotate O piece
-        if(type == TetrixPiece) {
+        if(this.type == TetrixPiece) {
             return;
         }
         var tmp;
@@ -28,65 +30,65 @@ function TetrixPiece(type) {
         }
     };
     
-    this.getBlockXCoord = function(index) {
-         return blocks[index][0];
+    getBlockXCoord(index) {
+         return this.blocks[index][0];
     };
   
-    this.getBlockYCoord = function(index) {
-        return blocks[index][1];
+    getBlockYCoord(index) {
+        return this.blocks[index][1];
     };
 
-    this.getMinX = function() {
-        var tmp = blocks[0][0];
+    getMinX() {
+        var tmp = this.blocks[0][0];
         for(var i = 1 ; i < 4 ; i++) {
-            if(tmp > blocks[i][0]) {
-                tmp = blocks[i][0];
+            if(tmp > this.blocks[i][0]) {
+                tmp = this.blocks[i][0];
             }
         }
         return tmp;
     };
 
-    this.getMaxX = function() {
-        var tmp = blocks[0][0];
+    getMaxX() {
+        var tmp = this.blocks[0][0];
         for(var i = 1 ; i < 4 ; i++) {
-            if(tmp < blocks[i][0]) {
-                tmp = blocks[i][0];
+            if(tmp < this.blocks[i][0]) {
+                tmp = this.blocks[i][0];
             }
         }
         return tmp;
     };
 
-    this.getMinY = function() {
-        var tmp = blocks[0][1];
+    getMinY() {
+        var tmp = this.blocks[0][1];
         for(var i = 1; i < 4; i++) {
-            if(tmp > blocks[i][1]) {
-                tmp = blocks[i][1];
+            if(tmp > this.blocks[i][1]) {
+                tmp = this.blocks[i][1];
             }
         }
         return tmp;
     };
 
-    this.getMaxY = function() {
-        var tmp = blocks[0][1];
+    getMaxY() {
+        var tmp = this.blocks[0][1];
         for(var i = 1; i < 4; i++) {
-            if (tmp < blocks[i][1]) {
-                tmp = blocks[i][1];
+            if (tmp < this.blocks[i][1]) {
+                tmp = this.blocks[i][1];
             }
         }
         return tmp;
     };
 
-    this.setBlockXCoord = function(index, value) {
-        blocks[index][0] = value;
+    setBlockXCoord(index, value) {
+        this.blocks[index][0] = value;
     };
 
-    this.setBlockYCoord = function(index, value) {
-        blocks[index][1] = value;
+    setBlockYCoordi(ndex, value) {
+        this.blocks[index][1] = value;
     };
 
-    this.setBlockCoord = function(index, x, y) {
-        blocks[index][0] = x;
-        blocks[index][1] = y;
+    setBlockCoord(index, x, y) {
+        this.blocks[index][0] = x;
+        this.blocks[index][1] = y;
     };
 }
 
