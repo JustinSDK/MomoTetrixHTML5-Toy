@@ -11,7 +11,7 @@
         tetrixPieces[i] = new TetrixPiece(i + 1);
     }
     
-    var backgroundColor = new Color(255, 255, 255);
+    var backgroundColor = new RGB(255, 255, 255);
     var width = boxWidthInBlk * blockWidth;
     var height = boxHeightInBlk * blockHeight;
     

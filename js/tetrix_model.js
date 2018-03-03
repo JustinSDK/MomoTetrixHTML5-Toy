@@ -150,7 +150,7 @@ TetrixPiece.pieceTypes = [[[ 0,-1],
                             [ 0, 0],
                             [ 0, 1]]];
                             
-class Color {
+class RGB {
     constructor(r, g, b) {
         this.r = r;
         this.g = g;
