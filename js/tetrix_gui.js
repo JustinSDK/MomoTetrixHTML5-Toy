@@ -11,6 +11,7 @@
         tetrixPieces[i] = new TetrixPiece(i + 1);
     }
     
+    // default background: rgb(255, 255, 255)
     var backgroundColor = new RGB(255, 255, 255);
     var width = boxWidthInBlk * blockWidth;
     var height = boxHeightInBlk * blockHeight;
@@ -40,8 +41,8 @@
         return currentImage;
     };
 
-    this.setBackgroundColor = function(backgroundColor) {
-        backgroundColor = backgroundColor;
+    this.setBackgroundColor = function(color) {
+        backgroundColor = color;
     }
     
     this.getBackgroundColor = function() {
