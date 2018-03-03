@@ -1,14 +1,9 @@
 class TetrixPiece {
     constructor(type) {
-        this.type = type;
         this.blocks = TetrixPiece.blocks[type].reduce((acc, block) => acc.concat([block.concat()]), []);
     }
 
     rotateLeft() {
-        // do not rotate O piece
-        if(this.type == TetrixPiece.O) {
-            return;
-        }
         var tmp;
         for(var i = 0; i < 4; i++) {
             tmp = this.getBlockXCoord(i);  
@@ -18,10 +13,6 @@ class TetrixPiece {
     };
 
     rotateRight() {
-        // do not rotate O piece
-        if(this.type == TetrixPiece) {
-            return;
-        }
         var tmp;
         for(var i = 0; i < 4; i++) {
             tmp = this.getBlockXCoord(i);
