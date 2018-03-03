@@ -1,4 +1,4 @@
-  function TetrixBox(boxWidthInBlk, boxHeightInBlk, 
+function TetrixBox(boxWidthInBlk, boxHeightInBlk, 
                    blockWidth,  blockHeight) {
     boxWidthInBlk = boxWidthInBlk || 4;
     boxHeightInBlk = boxHeightInBlk || 4;
@@ -8,7 +8,7 @@
     var isBlockBorder = false;
     var tetrixPieces = [];
     for(var i = 0; i < 7; i++) {
-        tetrixPieces[i] = new TetrixPiece(i + 1);
+        tetrixPieces[i] = new TetrixPiece(i);
     }
     
     // default background: rgb(255, 255, 255)
@@ -27,7 +27,7 @@
         return tetrixImages;
     };
     
-    this.generate = function() {
+    this.next = function() {
         var index = parseInt(Math.random() * 7);
         currentPiece = tetrixPieces[index];
         currentImage = tetrixImages[index];
@@ -77,7 +77,7 @@
         context.drawImage(currentImage, x * blockWidth, y * blockHeight, blockWidth, blockHeight);
         if(isBlockBorder) {
             context.beginPath();
-            context.strokeStyle = 'rgb(150, 150, 150)';
+            context.strokeStyle = rgb(150, 150, 150);
             context.rect(x * blockWidth, y * blockHeight, blockWidth, blockHeight);
             context.stroke();
         }
@@ -85,7 +85,7 @@
 
     this.paint = function(context) {
         // draw box background
-        context.fillStyle = backgroundColor.toString();
+        context.fillStyle = backgroundColor;
         context.fillRect(0, 0, width, height);
         for(var i = 0; i < 4; i++) {
             drawBlock(context, currentPiece.getBlockXCoord(i) + 1, currentPiece.getBlockYCoord(i) + 1);

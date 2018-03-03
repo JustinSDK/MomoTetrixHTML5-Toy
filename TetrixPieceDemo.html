@@ -23,7 +23,7 @@
                 
                 var context1 = canvas1.getContext('2d');
                 setTimeout(function() {
-                    tetrixBox.generate();
+                    tetrixBox.next();
                     tetrixBox.paint(context1);
                     setTimeout(arguments.callee, 1000);
                 }, 1000);
