@@ -1,9 +1,7 @@
 function TetrixPiece(type) {
-    var blocks = [];
-    for(var i = 0 ;i < 4 ;i++) {
-        blocks[i] = TetrixPiece.blocks[type][i].concat();
-    }
-    
+
+    let blocks = TetrixPiece.blocks[type].reduce((acc, block) => acc.concat([block.concat()]), []);
+
     this.rotateLeft = function() {
         // do not rotate O piece
         if(type == TetrixPiece.O) {
@@ -29,11 +27,6 @@ function TetrixPiece(type) {
             this.setBlockYCoord(i, tmp);
         }
     };
-    
-    // get the type of piece
-//    this.getType = function() {
-//        return pieceType;
-//    };
     
     this.getBlockXCoord = function(index) {
          return blocks[index][0];
