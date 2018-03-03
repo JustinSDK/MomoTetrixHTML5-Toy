@@ -12,7 +12,7 @@
     }
     
     // default background: rgb(255, 255, 255)
-    var backgroundColor = new RGB(255, 255, 255);
+    var backgroundColor = rgb(255, 255, 255);
     var width = boxWidthInBlk * blockWidth;
     var height = boxHeightInBlk * blockHeight;
     

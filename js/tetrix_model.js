@@ -150,14 +150,7 @@ TetrixPiece.pieceTypes = [[[ 0,-1],
                             [ 0, 0],
                             [ 0, 1]]];
                             
-class RGB {
-    constructor(r, g, b) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-    }
-
-    toString() {
-        return `rgb(${this.r}, ${this.g}, ${this.b})`;
-    };
-}                            
+function rgb(r, g, b) {
+    return `rgb(${r}, ${g}, ${b})`;
+}
+              
