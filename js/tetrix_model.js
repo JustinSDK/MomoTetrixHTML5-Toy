@@ -158,6 +158,6 @@ class RGB {
     }
 
     toString() {
-        return `RGB(${this.r}, ${this.g}, ${this.b})`;
+        return `rgb(${this.r}, ${this.g}, ${this.b})`;
     };
 }                            
