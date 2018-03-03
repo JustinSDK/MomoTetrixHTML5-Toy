@@ -6,10 +6,15 @@ function TetrixBox(boxWidthInBlk, boxHeightInBlk,
     blockHeight = blockHeight || 25;
     
     var isBlockBorder = false;
-    var tetrixPieces = [];
-    for(var i = 0; i < 7; i++) {
-        tetrixPieces[i] = new TetrixPiece(i);
-    }
+    var tetrixPieces = [
+        new TetrixPiece(TetrixPiece.Z), 
+        new TetrixPiece(TetrixPiece.S), 
+        new TetrixPiece(TetrixPiece.I), 
+        new TetrixPiece(TetrixPiece.J), 
+        new TetrixPiece(TetrixPiece.O), 
+        new TetrixPiece(TetrixPiece.T), 
+        new TetrixPiece(TetrixPiece.L)
+    ];
     
     // default background: rgb(255, 255, 255)
     var backgroundColor = rgb(255, 255, 255);
