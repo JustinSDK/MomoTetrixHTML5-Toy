@@ -1,21 +1,20 @@
 class TetrixPiece {
     constructor(type) {
-        this.blocks = TetrixPiece.blocks[type].reduce((acc, block) => acc.concat([block.concat()]), []);
+        this.blocks = TetrixPiece.blocks[type]
+                                 .reduce((acc, block) => acc.concat([block.concat()]), []);
     }
 
     rotateLeft() {
-        var tmp;
-        for(var i = 0; i < 4; i++) {
-            tmp = this.getBlockXCoord(i);  
+        for(let i = 0; i < 4; i++) {
+            let tmp = this.getBlockXCoord(i);  
             this.setBlockXCoord(i, this.getBlockYCoord(i));
             this.setBlockYCoord(i, -tmp);
         }
     };
 
     rotateRight() {
-        var tmp;
-        for(var i = 0; i < 4; i++) {
-            tmp = this.getBlockXCoord(i);
+        for(let i = 0; i < 4; i++) {
+            let tmp = this.getBlockXCoord(i);
             this.setBlockXCoord(i, -this.getBlockYCoord(i));
             this.setBlockYCoord(i, tmp);
         }
@@ -30,8 +29,8 @@ class TetrixPiece {
     };
 
     getMinX() {
-        var tmp = this.blocks[0][0];
-        for(var i = 1 ; i < 4 ; i++) {
+        let tmp = this.blocks[0][0];
+        for(let i = 1 ; i < 4 ; i++) {
             if(tmp > this.blocks[i][0]) {
                 tmp = this.blocks[i][0];
             }
@@ -40,8 +39,8 @@ class TetrixPiece {
     };
 
     getMaxX() {
-        var tmp = this.blocks[0][0];
-        for(var i = 1 ; i < 4 ; i++) {
+        let tmp = this.blocks[0][0];
+        for(let i = 1 ; i < 4 ; i++) {
             if(tmp < this.blocks[i][0]) {
                 tmp = this.blocks[i][0];
             }
@@ -50,8 +49,8 @@ class TetrixPiece {
     };
 
     getMinY() {
-        var tmp = this.blocks[0][1];
-        for(var i = 1; i < 4; i++) {
+        let tmp = this.blocks[0][1];
+        for(let i = 1; i < 4; i++) {
             if(tmp > this.blocks[i][1]) {
                 tmp = this.blocks[i][1];
             }
@@ -60,8 +59,8 @@ class TetrixPiece {
     };
 
     getMaxY() {
-        var tmp = this.blocks[0][1];
-        for(var i = 1; i < 4; i++) {
+        let tmp = this.blocks[0][1];
+        for(let i = 1; i < 4; i++) {
             if (tmp < this.blocks[i][1]) {
                 tmp = this.blocks[i][1];
             }
@@ -73,7 +72,7 @@ class TetrixPiece {
         this.blocks[index][0] = value;
     };
 
-    setBlockYCoordi(ndex, value) {
+    setBlockYCoord(index, value) {
         this.blocks[index][1] = value;
     };
 
