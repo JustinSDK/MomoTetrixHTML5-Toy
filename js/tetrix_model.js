@@ -46,6 +46,14 @@ class TetrixPiece {
         });
     }
 
+    rotate(isClockwise) {
+        if(isClockwise) {
+            this.rotateClockwise();
+        } else {
+            this.rotateCountClockwise();
+        }
+    }
+
     xOfBlock(i) {
         return this.blocks[i].x;
     }
@@ -192,18 +200,13 @@ class TetrixGround {
         }
     }
 
-    rotateTetrix(clockwise) {
+    rotateTetrix(isClockwise) {
         this.testPiece.blocks.forEach((block, i) => {
             block.x = this.tetrixPiece.blocks[i].x;
             block.y = this.tetrixPiece.blocks[i].y;
         });
 
-        if (clockwise) {
-            this.testPiece.rotateClockwise();
-        }
-        else {
-            this.testPiece.rotateCountClockwise();
-        }
+        this.testPiece.rotate(isClockwise);
 
         let rotatable = this.testPiece.blocks.every(block => {
             let x = block.x + this.xOffset;
@@ -212,12 +215,7 @@ class TetrixGround {
         });
 
         if (rotatable) {
-            if (clockwise) {
-                this.tetrixPiece.rotateClockwise();
-            }
-            else {
-                this.tetrixPiece.rotateCountClockwise();
-            }
+            this.tetrixPiece.rotate(isClockwise);
         }
     }
 
