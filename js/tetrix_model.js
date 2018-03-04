@@ -2,6 +2,10 @@ function block(x, y) {
     return {x, y};
 }
 
+function freeze_block(x, y) {
+    return Object.freeze({x, y});
+}
+
 // seven types of pieces
 const BLOCKS = [
     [block( 0, -1), block(0,  0), block(-1, 0), block(-1, 1)],
@@ -14,9 +18,14 @@ const BLOCKS = [
 ];
                             
 class TetrixPiece {
-    constructor(type) {
+    constructor(type, freeze = false) {
         this.type = type;
-        this.blocks = BLOCKS[type].map(b => block(b.x, b.y));
+        if(freeze) {
+            this.blocks = Object.freeze(BLOCKS[type].map(b => freeze_block(b.x, b.y)));
+            Object.freeze(this);
+        } else {
+            this.blocks = BLOCKS[type].map(b => block(b.x, b.y));
+        }
     }
 
     rotateLeft() {
@@ -87,10 +96,15 @@ TetrixPiece.TYPE = Object.freeze({
     L: 6,
 });
 
-TetrixPiece.Z = 0;
-TetrixPiece.S = 1;
-TetrixPiece.I = 2;
-TetrixPiece.J = 3;
-TetrixPiece.O = 4;
-TetrixPiece.T = 5;
-TetrixPiece.L = 6;
+TetrixPiece.FREEZE = Object.freeze({
+    Z: new TetrixPiece(TetrixPiece.TYPE.Z, freeze = true),
+    S: new TetrixPiece(TetrixPiece.TYPE.S, freeze = true),
+    I: new TetrixPiece(TetrixPiece.TYPE.I, freeze = true),
+    J: new TetrixPiece(TetrixPiece.TYPE.J, freeze = true),
+    O: new TetrixPiece(TetrixPiece.TYPE.O, freeze = true),
+    T: new TetrixPiece(TetrixPiece.TYPE.T, freeze = true),
+    L: new TetrixPiece(TetrixPiece.TYPE.L, freeze = true)
+});
+
+Object.freeze(TetrixPiece);
+

@@ -2,22 +2,18 @@ function rgb(r, g, b) {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-function TetrixBox(boxWidthInBlk, boxHeightInBlk, 
-                   blockWidth,  blockHeight) {
-    boxWidthInBlk = boxWidthInBlk || 4;
-    boxHeightInBlk = boxHeightInBlk || 4;
-    blockWidth = blockWidth || 25;
-    blockHeight = blockHeight || 25;
+function TetrixBox(boxWidthInBlk = 4, boxHeightInBlk = 4, 
+                   blockWidth = 25,  blockHeight = 25) {
     
     var isBlockBorder = false;
     var tetrixPieces = [
-        new TetrixPiece(TetrixPiece.TYPE.Z), 
-        new TetrixPiece(TetrixPiece.TYPE.S), 
-        new TetrixPiece(TetrixPiece.TYPE.I), 
-        new TetrixPiece(TetrixPiece.TYPE.J), 
-        new TetrixPiece(TetrixPiece.TYPE.O), 
-        new TetrixPiece(TetrixPiece.TYPE.T), 
-        new TetrixPiece(TetrixPiece.TYPE.L)
+        TetrixPiece.FREEZE.Z, 
+        TetrixPiece.FREEZE.S,  
+        TetrixPiece.FREEZE.I,  
+        TetrixPiece.FREEZE.J, 
+        TetrixPiece.FREEZE.O, 
+        TetrixPiece.FREEZE.T, 
+        TetrixPiece.FREEZE.L 
     ];
     
     // default background: rgb(255, 255, 255)
