@@ -14,10 +14,6 @@ class TetrixBox {
         return this.canvas.width;
     }
 
-    get blockWidth() {
-        return this.canvas.width / 4;
-    }
-
     paint(piece) {
         let context = this.canvas.getContext('2d');
         context.fillStyle = this.backgroundColor;
@@ -28,7 +24,7 @@ class TetrixBox {
     }
     
     drawBlock(context, piece, x, y) {
-        let bw = this.blockWidth;
+        let bw = this.canvas.width / 4;
         context.drawImage(this.images[piece.type], x * bw, y * bw, bw, bw);
         if(this.border) {
             context.beginPath();
