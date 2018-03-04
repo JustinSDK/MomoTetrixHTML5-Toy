@@ -8,7 +8,13 @@
 
         <script type="text/javascript" src="js/tetrix_model.js"></script>
         <script type="text/javascript" src="js/tetrix_view.js"></script>
-        <script type="text/javascript">   
+        <script type="text/javascript">
+            const blockWidth = 25;
+            const boxWidth = 100;
+            const boxHeight = 100;
+            const groundBlocksX = 10;
+            const groundBlocksY = 20;
+
             var images = [];
             for(var i = 0; i < 7; i++) {
                 images[i] = new Image();
@@ -16,20 +22,21 @@
             }
 
             let canvas = document.createElement('canvas');
-            canvas.width = 100;
-            canvas.height = 100;        
+            canvas.width = boxWidth;
+            canvas.height = boxHeight;        
             var tetrixBox = new TetrixBox(images, canvas);
             tetrixBox.backgroundColor = rgb(0, 0, 0);
     
             let piece = randomFreezePiece();
 
-            var tetrixGround = new TetrixGround(10, 20);
+            var tetrixGround = new TetrixGround(groundBlocksX, groundBlocksY);
             tetrixGround.addPieceOfType(piece.type);
-    
-            var stackArea = new TetrixStackArea(images, 25, tetrixGround);
+
             var canvas1 = document.getElementById('canvas');
-            canvas1.width = stackArea.width;
-            canvas1.height = stackArea.height;
+            canvas1.width = groundBlocksX * blockWidth;
+            canvas1.height = groundBlocksY * blockWidth;
+            
+            var stackArea = new TetrixStackArea(images, blockWidth, tetrixGround);
             
             var context = canvas1.getContext('2d');
             
