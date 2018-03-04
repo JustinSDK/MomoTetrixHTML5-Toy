@@ -29,6 +29,9 @@ class TetrixPiece {
     }
 
     rotateCountClockwise() {
+        if(this.type === TetrixPiece.TYPE.O) {
+            return;
+        }        
         this.blocks.forEach(block => {
             let x = block.y;
             let y = -block.x;
@@ -38,6 +41,9 @@ class TetrixPiece {
     }
 
     rotateClockwise() {
+        if(this.type === TetrixPiece.TYPE.O) {
+            return;
+        }
         this.blocks.forEach(block => {
             let x = -block.y;
             let y = block.x;
