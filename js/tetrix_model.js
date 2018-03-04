@@ -15,6 +15,7 @@ const BLOCKS = [
                             
 class TetrixPiece {
     constructor(type) {
+        this.type = type;
         this.blocks = BLOCKS[type].map(b => block(b.x, b.y));
     }
 

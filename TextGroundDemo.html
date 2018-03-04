@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <script type="text/javascript" src="js/tetrix.js"></script>
+        <script type="text/javascript" src="js/tetrix_model.js"></script>
+        <script type="text/javascript" src="js/tetrix_view.js"></script>
         <script type="text/javascript">
             window.onload = function() {        
                 var tetrixBox = new TetrixBox(4, 4, 25, 25);
@@ -13,12 +14,12 @@
                     images[i].src = 'images/' + (i + 1) + '.jpg';
                 }
         
-                tetrixBox.setBackgroundColor(new Color(0, 0, 0));
+                tetrixBox.setBackgroundColor(rgb(0, 0, 0));
                 tetrixBox.setTetrixImages(images);
-                tetrixBox.generate();
+                tetrixBox.next();
         
                 var tetrixGround = new TetrixGround(10, 20);
-                tetrixGround.addPieceOfType(tetrixBox.getTetrixPiece().getType());
+                tetrixGround.addPieceOfType(tetrixBox.getTetrixPiece().type);
         
                 var stackArea = new TetrixStackArea(tetrixBox, tetrixGround);
                 var canvas1 = document.getElementById('canvas1');
@@ -35,8 +36,8 @@
                         stackArea.paint(context);
                     }
                     else {
-                        tetrixGround.addPieceOfType(tetrixBox.getTetrixPiece().getType());
-                        tetrixBox.generate();
+                        tetrixGround.addPieceOfType(tetrixBox.getTetrixPiece().type);
+                        tetrixBox.next();
                     }
                     
                     setTimeout(arguments.callee, 100);
