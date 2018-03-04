@@ -87,8 +87,8 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
     
     this.isMovable = function(xStep, yStep) {
         for(var i = 0; i < 4; i++) {
-            var x = tetrixPiece.getBlockXCoord(i) + xOffset + xStep;
-            var y = tetrixPiece.getBlockYCoord(i) + yOffset + yStep;
+            var x = tetrixPiece.xOfBlock(i) + xOffset + xStep;
+            var y = tetrixPiece.yOfBlock(i) + yOffset + yStep;
 
             if(x < 0 || x >= groundWidthInBlk || y >= groundHeightInBlk) {
                 return false;
@@ -107,16 +107,16 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
         testPiece = new TetrixPiece(pieceType);    
         
         xOffset = groundWidthInBlk / 2 - 1;
-        if(tetrixPiece.getMinY() < 0) {
-            yOffset = Math.abs(tetrixPiece.getMinY());
+        if(tetrixPiece.minimumY < 0) {
+            yOffset = Math.abs(tetrixPiece.minimumY);
         }
         else {
             yOffset = 0;
         }
         
         for(var i = 0; i < 4; i++) {
-            var x = tetrixPiece.getBlockXCoord(i) + xOffset;
-            var y = tetrixPiece.getBlockYCoord(i) + yOffset;
+            var x = tetrixPiece.xOfBlock(i) + xOffset;
+            var y = tetrixPiece.yOfBlock(i) + yOffset;
 
             if(ground[x][y] != 0) {
                 isGameover = true;
@@ -132,8 +132,8 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
         isOperable = true;
         
         xOffset = parseInt(groundWidthInBlk / 2) - 1;
-        if(tetrixPiece.getMinY() < 0) {
-            yOffset = Math.abs(tetrixPiece.getMinY());
+        if(tetrixPiece.minimumY < 0) {
+            yOffset = Math.abs(tetrixPiece.minimumY);
         }
         else {
             yOffset = 0;
@@ -172,7 +172,7 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
 
     this.rotateTetrix = function(clockwise) {
         for(var i = 0; i < 4; i++) {
-            testPiece.setBlockCoord(i, tetrixPiece.getBlockXCoord(i), tetrixPiece.getBlockYCoord(i));
+            testPiece.setBlockCoord(i, tetrixPiece.xOfBlock(i), tetrixPiece.yOfBlock(i));
         }
 
         if(clockwise) {
@@ -183,8 +183,8 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
         }
 
         for(var i = 0; i < 4; i++) {
-            var x = testPiece.getBlockXCoord(i) + xOffset;
-            var y = testPiece.getBlockYCoord(i) + yOffset;
+            var x = testPiece.xOfBlock(i) + xOffset;
+            var y = testPiece.yOfBlock(i) + yOffset;
 
             if(x < 0 || x >= groundWidthInBlk || y >= groundHeightInBlk || y < 0) {
                 return;
@@ -196,7 +196,7 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
         } 
        
         for(var i = 0; i < 4; i++) {
-            tetrixPiece.setBlockCoord(i, testPiece.getBlockXCoord(i), testPiece.getBlockYCoord(i));
+            tetrixPiece.setBlockCoord(i, testPiece.xOfBlock(i), testPiece.yOfBlock(i));
         }
     };
     
@@ -206,12 +206,12 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
         if(!isGameover && !this.isMovable(0, 1)) {
             // touch the bottom of playground or the top of one piece 
             for(var i = 0; i < 4; i++) {
-                var x = tetrixPiece.getBlockXCoord(i) + xOffset;
-                var y = tetrixPiece.getBlockYCoord(i) + yOffset;
+                var x = tetrixPiece.xOfBlock(i) + xOffset;
+                var y = tetrixPiece.yOfBlock(i) + yOffset;
                 ground[x][y] = tetrixPiece.type + 1;
             }
         
-            var pieceTop = tetrixPiece.getMinY() + yOffset;
+            var pieceTop = tetrixPiece.minimumY + yOffset;
             if(pieceTop < emptyLines) {
                 emptyLines = pieceTop;
             }
@@ -349,8 +349,8 @@ function TetrixStackArea(tetrixBox, tetrixGround) {
         // draw current piece
         for(var i = 0; i < 4; i++) {
             drawBlock(context, tetrixBox.images[tetrixGround.getTetrixPiece().type],
-                    tetrixGround.getTetrixPiece().getBlockXCoord(i) + tetrixGround.getXOffset(),
-                    tetrixGround.getTetrixPiece().getBlockYCoord(i) + tetrixGround.getYOffset());
+                    tetrixGround.getTetrixPiece().xOfBlock(i) + tetrixGround.getXOffset(),
+                    tetrixGround.getTetrixPiece().yOfBlock(i) + tetrixGround.getYOffset());
         }
 
         // draw stack of pieces

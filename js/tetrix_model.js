@@ -44,40 +44,32 @@ class TetrixPiece {
         }
     };
     
-    getBlockXCoord(i) {
+    xOfBlock(i) {
          return this.blocks[i].x;
     };
   
-    getBlockYCoord(i) {
+    yOfBlock(i) {
         return this.blocks[i].y;
     };
 
-    getMinX() {
+    get minimumX() {
         return this.blocks.map(b => b.x)
                           .reduce((acc, x) => acc > x ? x : acc);
     };
 
-    getMaxX() {
+    get maximumX() {
         return this.blocks.map(b => b.x)
                           .reduce((acc, x) => acc < x ? x : acc);
     };
 
-    getMinY() {
+    get minimumY() {
         return this.blocks.map(b => b.y)
                           .reduce((acc, y) => acc > y ? y : acc);
     };
 
-    getMaxY() {
+    get maximumY() {
         return this.blocks.map(b => b.y)
                           .reduce((acc, y) => acc < y ? y : acc);       
-    };
-
-    setBlockXCoord(i, value) {
-        this.blocks[i].x = value;
-    };
-
-    setBlockYCoord(i, value) {
-        this.blocks[i].y = value;
     };
 
     setBlockCoord(i, x, y) {
