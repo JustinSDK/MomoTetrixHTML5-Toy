@@ -12,48 +12,48 @@
                 const groundBlocksX = 10;
                 const groundBlocksY = 20;
 
-                var isRestart = true;
-                var isPause = false;
-                var level = 1;
-                var speed = 1000;
+                let isRestart = true;
+                let isPause = false;
+                let level = 1;
+                let speed = 1000;
         
-                var logoIcon = new Image();
+                let logoIcon = new Image();
                 logoIcon.src = 'images/logo.jpg';
                 
-                var imgs = document.getElementsByTagName('img');
-                var images = [];
-                for(var i = 0; i < imgs.length; i++) {
+                let imgs = document.getElementsByTagName('img');
+                let images = [];
+                for(let i = 0; i < imgs.length; i++) {
                     images.push(imgs[i]);
                 }
                 
-                for(var i = 0; i < images.length; i++) {
+                for(let i = 0; i < images.length; i++) {
                     document.body.removeChild(images[i]);
                 }
                 document.body.appendChild(logoIcon);
 
-                var tetrixboxCanvas = document.getElementById('tetrixbox');
+                let tetrixboxCanvas = document.getElementById('tetrixbox');
                 tetrixboxCanvas.width = boxWidth;
                 tetrixboxCanvas.height = boxWidth;
-                var tetrixboxContext = tetrixboxCanvas.getContext('2d');
+                let tetrixboxContext = tetrixboxCanvas.getContext('2d');
                     
 
-                var tetrixBox = new TetrixBox(images, tetrixboxCanvas);
+                let tetrixBox = new TetrixBox(images, tetrixboxCanvas);
                 let piece = TetrixPiece.randomFreezePiece();
                 tetrixBox.paint(piece);    
         
-                var tetrixGround = new TetrixGround(10, 20);
+                let tetrixGround = new TetrixGround(10, 20);
                 tetrixGround.addPieceOfType(piece.type);
         
-                var stackareaCanvas = document.getElementById('stackarea');
+                let stackareaCanvas = document.getElementById('stackarea');
                 stackareaCanvas.width = groundBlocksX * blockWidth;
                 stackareaCanvas.height = groundBlocksY * blockWidth;        
-                var stackArea = new TetrixStackArea(images, stackareaCanvas);
+                let stackArea = new TetrixStackArea(images, stackareaCanvas);
                 
                 stackArea.paint(tetrixGround);
                 
-                var levelLabel = document.getElementById('level');
-                var lineLabel = document.getElementById('line');
-                var scoreLabel = document.getElementById('score');
+                let levelLabel = document.getElementById('level');
+                let lineLabel = document.getElementById('line');
+                let scoreLabel = document.getElementById('score');
                 
                 document.getElementById('newGame').onclick = function() {
                     this.blur();
