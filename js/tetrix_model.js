@@ -7,8 +7,7 @@ class TetrixPiece {
         for(let i = 0; i < 4; i++) {
             let x = this.getBlockYCoord(i);
             let y = -this.getBlockXCoord(i);  
-            this.setBlockXCoord(i, x);
-            this.setBlockYCoord(i, y);
+            this.setBlockCoord(i, x, y);
         }
     };
 
@@ -16,8 +15,7 @@ class TetrixPiece {
         for(let i = 0; i < 4; i++) {
             let x = -this.getBlockYCoord(i);
             let y = this.getBlockXCoord(i);
-            this.setBlockXCoord(i, x);
-            this.setBlockYCoord(i, y);
+            this.setBlockCoord(i, x, y);
         }
     };
     
