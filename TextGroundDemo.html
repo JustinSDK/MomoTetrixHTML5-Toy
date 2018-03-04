@@ -36,7 +36,7 @@
             canvas.width = groundBlocksX * blockWidth;
             canvas.height = groundBlocksY * blockWidth;
 
-            var stackArea = new TetrixStackArea(images, canvas, tetrixGround);
+            var stackArea = new TetrixStackArea(images, canvas);
             
             setTimeout(function() {
                 if(tetrixGround.isMovable(0, 1)) {
@@ -54,7 +54,7 @@
                     setTimeout(arguments.callee, 100);
                 }
 
-                stackArea.paint();
+                stackArea.paint(tetrixGround);
             }, 100);
 
         </script>        

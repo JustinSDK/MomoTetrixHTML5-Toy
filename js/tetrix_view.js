@@ -35,15 +35,14 @@ class TetrixBox {
     }    
 }
 
-function TetrixStackArea(images, canvas, tetrixGround) {
-    let blockWidth = canvas.width / tetrixGround.xblocks;
+function TetrixStackArea(images, canvas) {
     this.backgroundColor = rgb(255, 255, 255);
     this.width = canvas.width;
     this.height = canvas.height;       
     this.isBlockBorder = false;
     this.context = canvas.getContext('2d');
         
-    function drawBlock(context, image, x, y) {
+    function drawBlock(context, image, x, y, blockWidth) {
         context.drawImage(image, x * blockWidth, y * blockWidth, blockWidth, blockWidth);
         
         if(this.isBlockBorder) {
@@ -54,7 +53,8 @@ function TetrixStackArea(images, canvas, tetrixGround) {
         }
     }
     
-    this.paint = function() {
+    this.paint = function(tetrixGround) {
+        let blockWidth = canvas.width / tetrixGround.xblocks;
         // clean previous screen
         this.context.fillStyle = this.backgroundColor;
         this.context.fillRect(0, 0, this.width, this.height);
@@ -63,7 +63,8 @@ function TetrixStackArea(images, canvas, tetrixGround) {
         for(var i = 0; i < 4; i++) {
             drawBlock(this.context, images[tetrixGround.tetrixPiece.type],
                     tetrixGround.tetrixPiece.xOfBlock(i) + tetrixGround.xOffset,
-                    tetrixGround.tetrixPiece.yOfBlock(i) + tetrixGround.yOffset);
+                    tetrixGround.tetrixPiece.yOfBlock(i) + tetrixGround.yOffset,
+                    blockWidth);
         }
 
         // draw stack of pieces
@@ -72,7 +73,8 @@ function TetrixStackArea(images, canvas, tetrixGround) {
                 if(tetrixGround.ground[i][j] == 0) {
                     continue;
                 }
-                drawBlock(this.context, images[tetrixGround.ground[i][j] - 1], i, j);
+                drawBlock(this.context, images[tetrixGround.ground[i][j] - 1], i, j,
+                    blockWidth);
             }
         }
 
