@@ -2,10 +2,10 @@
 <html>
   <head>
     <title>Momo Tetrix</title>
+        <script type="module">
+            import {TetrixPiece, TetrixGround} from './js/tetrix_model.js';
+            import {rgb, TetrixBox, TetrixStackArea} from './js/tetrix_drawing.js';
 
-    <script type="text/javascript" src="js/tetrix_model.js"></script>
-    <script type="text/javascript" src="js/tetrix_drawing.js"></script>
-    <script type="text/javascript">
             window.onload = function() {
                 const blockWidth = 25;
                 const boxWidth = 100;
