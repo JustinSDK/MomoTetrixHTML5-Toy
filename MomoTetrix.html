@@ -6,55 +6,57 @@
             import {TetrixPiece, TetrixGround} from './js/tetrix_model.js';
             import {rgb, TetrixBox, TetrixStackArea} from './js/tetrix_drawing.js';
 
-            window.onload = function() {
-                const blockWidth = 25;
-                const boxWidth = 100;
-                const groundBlocksX = 10;
-                const groundBlocksY = 20;
-
-                let isRestart = true;
-                let isPause = false;
-                let level = 1;
-                let speed = 1000;
-        
+            const BLOCK_WIDTH = 25;
+            const BOK_WIDTH = 100;
+            const GROUND_BLOCKS_X = 10;
+            const GROUND_BLOCKS_Y = 20;
+            const INIT_GAME_SPEED = 1000;
+            
+            function process_images() {
                 let logoIcon = new Image();
                 logoIcon.src = 'images/logo.jpg';
-                
-                let imgs = document.getElementsByTagName('img');
-                let images = [];
-                for(let i = 0; i < imgs.length; i++) {
-                    images.push(imgs[i]);
-                }
-                
-                for(let i = 0; i < images.length; i++) {
-                    document.body.removeChild(images[i]);
-                }
                 document.body.appendChild(logoIcon);
 
-                let tetrixboxCanvas = document.getElementById('tetrixbox');
-                tetrixboxCanvas.width = boxWidth;
-                tetrixboxCanvas.height = boxWidth;
-                let tetrixboxContext = tetrixboxCanvas.getContext('2d');
-                    
+                let images = Array.from(document.getElementsByTagName('img'));
+                images.forEach(image => {
+                    document.body.removeChild(image);
+                });
 
+                return images;
+            }
+
+            window.onload = function() {        
+                let images = process_images();
+                
+                // Prepare TetrixBox
+                let tetrixboxCanvas = document.getElementById('tetrixbox');
+                tetrixboxCanvas.width = BOK_WIDTH;
+                tetrixboxCanvas.height = BOK_WIDTH;
                 let tetrixBox = new TetrixBox(images, tetrixboxCanvas);
                 let piece = TetrixPiece.randomFreezePiece();
                 tetrixBox.paint(piece);    
         
+                // Prepare TetrixGround
                 let tetrixGround = new TetrixGround(10, 20);
                 tetrixGround.addPieceOfType(piece.type);
-        
-                let stackareaCanvas = document.getElementById('stackarea');
-                stackareaCanvas.width = groundBlocksX * blockWidth;
-                stackareaCanvas.height = groundBlocksY * blockWidth;        
-                let stackArea = new TetrixStackArea(images, stackareaCanvas);
                 
+                // Prepare TetrixStackArea
+                let stackareaCanvas = document.getElementById('stackarea');
+                stackareaCanvas.width = GROUND_BLOCKS_X * BLOCK_WIDTH;
+                stackareaCanvas.height = GROUND_BLOCKS_Y * BLOCK_WIDTH;        
+                let stackArea = new TetrixStackArea(images, stackareaCanvas);
                 stackArea.paint(tetrixGround);
                 
+                // GAME
                 let levelLabel = document.getElementById('level');
                 let lineLabel = document.getElementById('line');
                 let scoreLabel = document.getElementById('score');
-                
+
+                let isRestart = true;
+                let isPause = false;
+                let level = 1;
+                let speed = INIT_GAME_SPEED;
+                                
                 document.getElementById('newGame').onclick = function() {
                     this.blur();
                     isRestart = true;
@@ -90,7 +92,7 @@
                         }
                         
                         level = 1;
-                        speed = 1000;
+                        speed = INIT_GAME_SPEED;
                         tetrixGround.reset();
                         levelLabel.innerHTML = level;
                         lineLabel.innerHTML = tetrixGround.removedLines;
@@ -132,10 +134,9 @@
                     }
                     stackArea.paint(tetrixGround);
                 };
-            
             };
         </script>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta charset="UTF-8">
   </head>
   <body>
     <div style="text-align: right;"><a href="https://github.com/JustinSDK/MomoTetrixHTML5-Toy">GitHub</a></div>
