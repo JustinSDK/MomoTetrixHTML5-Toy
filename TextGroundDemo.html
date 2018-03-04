@@ -6,7 +6,7 @@
         <script type="text/javascript" src="js/tetrix_view.js"></script>
         <script type="text/javascript">
             window.onload = function() {        
-                var tetrixBox = new TetrixBox();
+                
         
                 var images = [];
                 for(var i = 0; i < 7; i++) {
@@ -14,8 +14,8 @@
                     images[i].src = 'images/' + (i + 1) + '.jpg';
                 }
         
+                var tetrixBox = new TetrixBox(images);
                 tetrixBox.setBackgroundColor(rgb(0, 0, 0));
-                tetrixBox.setTetrixImages(images);
                 tetrixBox.next();
         
                 var tetrixGround = new TetrixGround(10, 20);

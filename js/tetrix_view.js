@@ -2,25 +2,24 @@ function rgb(r, g, b) {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-function TetrixBox(box = {xblocks: 4, yblocks: 4}, block = {width: 25, height: 25}) {
-    
-    var isBlockBorder = false;
-    var tetrixPieces = [
-        TetrixPiece.FREEZE.Z, 
-        TetrixPiece.FREEZE.S,  
-        TetrixPiece.FREEZE.I,  
-        TetrixPiece.FREEZE.J, 
-        TetrixPiece.FREEZE.O, 
-        TetrixPiece.FREEZE.T, 
-        TetrixPiece.FREEZE.L 
-    ];
+const tetrixPieces = [
+    TetrixPiece.FREEZE.Z, 
+    TetrixPiece.FREEZE.S,  
+    TetrixPiece.FREEZE.I,  
+    TetrixPiece.FREEZE.J, 
+    TetrixPiece.FREEZE.O, 
+    TetrixPiece.FREEZE.T, 
+    TetrixPiece.FREEZE.L 
+];
+
+function TetrixBox(images, box = {width: 100, height: 100}, block = {width: 25, height: 25}) {
+    var tetrixImages = images;
+    var width = box.width;
+    var height = box.height;    
     
     // default background: rgb(255, 255, 255)
     var backgroundColor = rgb(255, 255, 255);
-    var width = box.xblocks * block.width;
-    var height = box.yblocks * block.height;
-    
-    var tetrixImages = null;
+    var isBlockBorder = false;
     var currentPiece = currentImage = null;
 
     this.setTetrixImages = function(images) {
@@ -92,7 +91,8 @@ function TetrixBox(box = {xblocks: 4, yblocks: 4}, block = {width: 25, height: 2
         context.fillStyle = backgroundColor;
         context.fillRect(0, 0, width, height);
         for(var i = 0; i < 4; i++) {
-            drawBlock(context, currentPiece.getBlockXCoord(i) + 1, currentPiece.getBlockYCoord(i) + 1);
+            let block = currentPiece.blocks[i];
+            drawBlock(context, block.x + 1, block.y + 1);
         }
     }
 }
