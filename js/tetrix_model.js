@@ -1,11 +1,3 @@
-TetrixPiece.Z = 0;
-TetrixPiece.S = 1;
-TetrixPiece.I = 2;
-TetrixPiece.J = 3;
-TetrixPiece.O = 4;
-TetrixPiece.T = 5;
-TetrixPiece.L = 6;
-
 function block(x, y) {
     return {x, y};
 }
@@ -84,3 +76,10 @@ class TetrixPiece {
     };
 }
 
+TetrixPiece.Z = 0;
+TetrixPiece.S = 1;
+TetrixPiece.I = 2;
+TetrixPiece.J = 3;
+TetrixPiece.O = 4;
+TetrixPiece.T = 5;
+TetrixPiece.L = 6;
