@@ -1,17 +1,7 @@
 function rgb(r, g, b) {
     return `rgb(${r}, ${g}, ${b})`;
 }
-
-const tetrixPieces = [
-    TetrixPiece.FREEZE.Z, 
-    TetrixPiece.FREEZE.S,  
-    TetrixPiece.FREEZE.I,  
-    TetrixPiece.FREEZE.J, 
-    TetrixPiece.FREEZE.O, 
-    TetrixPiece.FREEZE.T, 
-    TetrixPiece.FREEZE.L 
-];
-   
+ 
 class TetrixBox {
     constructor(images, canvas) {
         this.images = images;
