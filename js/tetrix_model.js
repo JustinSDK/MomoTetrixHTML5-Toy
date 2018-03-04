@@ -232,13 +232,13 @@ function TetrixGround(xblocks = 10, yblocks = 20) {
         
         if(!isGameover && !this.isMovable(0, 1)) {
             // touch the bottom of playground or the top of one piece 
-            for(var i = 0; i < 4; i++) {
-                var x = tetrixPiece.xOfBlock(i) + xOffset;
-                var y = tetrixPiece.yOfBlock(i) + yOffset;
+            tetrixPiece.blocks.forEach(block => {
+                let x = block.x + xOffset;
+                let y = block.y + yOffset;
                 ground[x][y] = tetrixPiece.type + 1;
-            }
-        
-            var pieceTop = tetrixPiece.minimumY + yOffset;
+            });
+            
+            let pieceTop = tetrixPiece.minimumY + yOffset;
             if(pieceTop < emptyLines) {
                 emptyLines = pieceTop;
             }
