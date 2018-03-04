@@ -28,7 +28,7 @@ class TetrixPiece {
         }
     }
 
-    rotateLeft() {
+    rotateCountClockwise() {
         this.blocks.forEach(block => {
             let x = block.y;
             let y = -block.x;
@@ -37,7 +37,7 @@ class TetrixPiece {
         });
     };
 
-    rotateRight() {
+    rotateClockwise() {
         this.blocks.forEach(block => {
             let x = -block.y;
             let y = block.x;
@@ -164,8 +164,8 @@ class TetrixGround {
         this.yOffset = this.tetrixPiece.maximumY < 0 ? Math.abs(this.tetrixPiece.minimumY) : 0;
 
         this.ground = Array(this.xblocks)
-            .fill()
-            .map(_ => Array(this.yblocks).fill(0));
+                        .fill()
+                        .map(_ => Array(this.yblocks).fill(0));
     }
 
     moveTetrixLeft() {
@@ -199,10 +199,10 @@ class TetrixGround {
         });
 
         if (clockwise) {
-            this.testPiece.rotateRight();
+            this.testPiece.rotateClockwise();
         }
         else {
-            this.testPiece.rotateLeft();
+            this.testPiece.rotateCountClockwise();
         }
 
         let rotatable = this.testPiece.blocks.every(block => {
@@ -212,15 +212,11 @@ class TetrixGround {
         });
 
         if (rotatable) {
-            // this.tetrixPiece.blocks.forEach((block, i) => {
-            //     block.x = this.testPiece.blocks[i].x;
-            //     block.y = this.testPiece.blocks[i].y;
-            // });
             if (clockwise) {
-                this.tetrixPiece.rotateRight();
+                this.tetrixPiece.rotateClockwise();
             }
             else {
-                this.tetrixPiece.rotateLeft();
+                this.tetrixPiece.rotateCountClockwise();
             }
         }
     };
