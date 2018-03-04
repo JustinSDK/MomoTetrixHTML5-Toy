@@ -17,8 +17,8 @@
                 var tetrixBox = new TetrixBox(images);
                 
                 var canvas1 = document.getElementById('canvas1');
-                canvas1.width = tetrixBox.getWidth();
-                canvas1.height = tetrixBox.getHeight();
+                canvas1.width = tetrixBox.width;
+                canvas1.height = tetrixBox.height;
                 
                 var context1 = canvas1.getContext('2d');
                 setTimeout(function() {

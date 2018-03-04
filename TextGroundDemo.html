@@ -15,11 +15,11 @@
                 }
         
                 var tetrixBox = new TetrixBox(images);
-                tetrixBox.setBackgroundColor(rgb(0, 0, 0));
+                tetrixBox.backgroundColor = rgb(0, 0, 0);
                 tetrixBox.next();
         
                 var tetrixGround = new TetrixGround(10, 20);
-                tetrixGround.addPieceOfType(tetrixBox.getTetrixPiece().type);
+                tetrixGround.addPieceOfType(tetrixBox.currentPiece.type);
         
                 var stackArea = new TetrixStackArea(tetrixBox, tetrixGround);
                 var canvas1 = document.getElementById('canvas1');
@@ -36,7 +36,7 @@
                         stackArea.paint(context);
                     }
                     else {
-                        tetrixGround.addPieceOfType(tetrixBox.getTetrixPiece().type);
+                        tetrixGround.addPieceOfType(tetrixBox.currentPiece.type);
                         tetrixBox.next();
                     }
                     
