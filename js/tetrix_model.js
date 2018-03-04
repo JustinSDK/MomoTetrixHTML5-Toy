@@ -242,34 +242,40 @@ function TetrixGround(xblocks = 10, yblocks = 20) {
         isOperable = true;
     };
     
-    function removeFullLines() {
-        var count = 0;
-        for(var j = yblocks - 1; j > emptyLines; j--) {
-            var isFullLine = true;
-            for(var i = 0; i < xblocks; i++) {
-                if(ground[i][j] == 0) {
-                    isFullLine = false;
-                    break;
+    function isFullLine(j) {
+        for(let i = 0; i < xblocks; i++) {
+            if(ground[i][j] == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function cleanLine(j) {
+        // move lines down
+        for(let k = j; k > emptyLines; k--) {
+            for(let i = 0; i < xblocks; i++) {
+                if(ground[i][k] != ground[i][k-1]) {
+                    ground[i][k] = ground[i][k-1];
                 }
             }
+        }
+        
+        // clean top line
+        for(let i = 0; i < xblocks; i++) {
+            ground[i][emptyLines] = 0;
+        }        
+    }
 
-            if(isFullLine) {
-                count++;
-                for(var k = j; k > emptyLines; k--) {
-                    for(var i = 0; i < xblocks; i++) {
-                        if(ground[i][k] != ground[i][k-1]) {
-                            ground[i][k] = ground[i][k-1];
-                        }
-                    }
-                }
-                
-                for(var i = 0; i < xblocks; i++) {
-                    ground[i][emptyLines] = 0;
-                }
+    function removeFullLines() {
+        let count = 0;
+        for(let j = yblocks - 1; j > emptyLines; j--) {
+            if(isFullLine(j)) {
+                cleanLine(j);
                 emptyLines++;
-                j++;
-                
                 removedLines++;
+                count++;
+                j++;
             }
         }
         
