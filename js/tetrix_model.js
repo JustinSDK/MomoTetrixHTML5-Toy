@@ -73,11 +73,6 @@ class TetrixPiece {
         return this.blocks.map(b => b.y)
                           .reduce((acc, y) => acc < y ? y : acc);       
     };
-
-    setBlockCoord(i, x, y) {
-        this.blocks[i].x = x;
-        this.blocks[i].y = y;
-    };
 }
 
 TetrixPiece.TYPE = Object.freeze({
