@@ -2,8 +2,7 @@ function rgb(r, g, b) {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-function TetrixBox(boxWidthInBlk = 4, boxHeightInBlk = 4, 
-                   blockWidth = 25,  blockHeight = 25) {
+function TetrixBox(box = {xblocks: 4, yblocks: 4}, block = {width: 25, height: 25}) {
     
     var isBlockBorder = false;
     var tetrixPieces = [
@@ -18,8 +17,8 @@ function TetrixBox(boxWidthInBlk = 4, boxHeightInBlk = 4,
     
     // default background: rgb(255, 255, 255)
     var backgroundColor = rgb(255, 255, 255);
-    var width = boxWidthInBlk * blockWidth;
-    var height = boxHeightInBlk * blockHeight;
+    var width = box.xblocks * block.width;
+    var height = box.yblocks * block.height;
     
     var tetrixImages = null;
     var currentPiece = currentImage = null;
@@ -63,11 +62,11 @@ function TetrixBox(boxWidthInBlk = 4, boxHeightInBlk = 4,
     };
     
     this.getBlockWidth = function() {
-        return blockWidth;
+        return block.width;
     };
     
     this.getBlockHeight = function() {
-        return blockHeight;
+        return block.height;
     };
     
     this.getWidth = function() {
@@ -79,11 +78,11 @@ function TetrixBox(boxWidthInBlk = 4, boxHeightInBlk = 4,
     };
     
     function drawBlock(context, x, y) {
-        context.drawImage(currentImage, x * blockWidth, y * blockHeight, blockWidth, blockHeight);
+        context.drawImage(currentImage, x * block.width, y * block.height, block.width, block.height);
         if(isBlockBorder) {
             context.beginPath();
             context.strokeStyle = rgb(150, 150, 150);
-            context.rect(x * blockWidth, y * blockHeight, blockWidth, blockHeight);
+            context.rect(x * block.width, y * block.height, block.width, block.height);
             context.stroke();
         }
     }
