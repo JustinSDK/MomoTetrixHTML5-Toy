@@ -104,13 +104,13 @@ TetrixPiece.TYPE = Object.freeze({
 });
 
 TetrixPiece.FREEZE = Object.freeze({
-    Z: new TetrixPiece(TetrixPiece.TYPE.Z, freeze = true),
-    S: new TetrixPiece(TetrixPiece.TYPE.S, freeze = true),
-    I: new TetrixPiece(TetrixPiece.TYPE.I, freeze = true),
-    J: new TetrixPiece(TetrixPiece.TYPE.J, freeze = true),
-    O: new TetrixPiece(TetrixPiece.TYPE.O, freeze = true),
-    T: new TetrixPiece(TetrixPiece.TYPE.T, freeze = true),
-    L: new TetrixPiece(TetrixPiece.TYPE.L, freeze = true)
+    Z: new TetrixPiece(TetrixPiece.TYPE.Z, true),
+    S: new TetrixPiece(TetrixPiece.TYPE.S, true),
+    I: new TetrixPiece(TetrixPiece.TYPE.I, true),
+    J: new TetrixPiece(TetrixPiece.TYPE.J, true),
+    O: new TetrixPiece(TetrixPiece.TYPE.O, true),
+    T: new TetrixPiece(TetrixPiece.TYPE.T, true),
+    L: new TetrixPiece(TetrixPiece.TYPE.L, true)
 });
 
 Object.freeze(TetrixPiece);
@@ -287,3 +287,5 @@ function removeFullLines(tground) {
 
     tground.score = tground.score + parseInt(Math.pow(2, count));
 }
+
+export {TetrixPiece, TetrixGround};

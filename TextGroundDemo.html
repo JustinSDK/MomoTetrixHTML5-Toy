@@ -5,10 +5,9 @@
     </head>
     <body>       
         <canvas id="canvas" style="border-width: 1px; border-style: solid;"></canvas>
-
-        <script type="text/javascript" src="js/tetrix_model.js"></script>
-        <script type="text/javascript" src="js/tetrix_drawing.js"></script>
-        <script type="text/javascript">
+        <script type="module">
+            import {TetrixPiece, TetrixGround} from './js/tetrix_model.js';
+            import {rgb, TetrixBox, TetrixStackArea} from './js/tetrix_drawing.js';
             const blockWidth = 25;
             const boxWidth = 100;
             const groundBlocksX = 10;
@@ -37,7 +36,7 @@
 
             let stackArea = new TetrixStackArea(images, canvas);
             
-            setTimeout(function() {
+            setTimeout(function loop() {
                 if(tetrixGround.isMovable(0, 1)) {
                     tetrixGround.moveTetrixRight();
                     tetrixGround.moveTetrixDown();
@@ -50,7 +49,7 @@
                 }
                 
                 if(!tetrixGround.isGameover) {
-                    setTimeout(arguments.callee, 100);
+                    setTimeout(loop, 100);
                 }
 
                 stackArea.paint(tetrixGround);

@@ -81,3 +81,5 @@ class TetrixStackArea {
         }
     }
 }
+
+export {rgb, TetrixBox, TetrixStackArea};

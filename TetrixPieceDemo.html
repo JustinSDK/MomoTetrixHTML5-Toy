@@ -5,10 +5,10 @@
     </head>
     <body>       
         <canvas id="canvas"></canvas>
+        <script type="module">
+            import {TetrixPiece} from './js/tetrix_model.js';
+            import {TetrixBox} from './js/tetrix_drawing.js';
 
-        <script type="text/javascript" src="js/tetrix_model.js"></script>
-        <script type="text/javascript" src="js/tetrix_drawing.js"></script>
-        <script type="text/javascript">
             let images = [];
             for(let i = 0; i < 7; i++) {
                 images[i] = new Image();
@@ -20,10 +20,10 @@
             canvas.height = 100;
             let tetrixBox = new TetrixBox(images, canvas);
             
-            setTimeout(function() {
+            setTimeout(function loop() {
                 let piece = TetrixPiece.randomFreezePiece();
                 tetrixBox.paint(piece);
-                setTimeout(arguments.callee, 1000);
+                setTimeout(loop, 1000);
             }, 1000);
         </script>        
     </body>
