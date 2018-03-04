@@ -71,13 +71,12 @@ function TetrixStackArea(images, blockWidth, tetrixGround) {
     };
         
     function drawBlock(context, image, x, y) {
-        let bw = blockWidth;
-        context.drawImage(image, x * bw, y * bw, bw, bw);
+        context.drawImage(image, x * blockWidth, y * blockWidth, blockWidth, blockWidth);
         
         if(isBlockBorder) {
             context.beginPath();
             context.strokeStyle = 'rgb(150, 150, 150)';
-            context.drawRect(x * bw, y * bw, bw, bw);
+            context.drawRect(x * blockWidth, y * blockWidth, blockWidth, blockWidth);
             context.stroke();
         }
     }
@@ -105,12 +104,11 @@ function TetrixStackArea(images, blockWidth, tetrixGround) {
         }
 
         if(tetrixGround.isGameover) {
-            let bw = box.width / 4;
             context.save();
             context.shadowOffsetX = 1;
             context.shadowOffsetY = 1;
             context.shadowColor = 'black';
-            context.font = bw + 'px "Arial Black"';
+            context.font = blockWidth + 'px "Arial Black"';
             context.fillStyle = 'red';
             context.fillText('Game over', width / 5, height / 2);
             context.restore();
