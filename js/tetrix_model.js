@@ -21,12 +21,12 @@ class TetrixPiece {
         }
     };
     
-    getBlockXCoord(index) {
-         return this.blocks[index].x;
+    getBlockXCoord(i) {
+         return this.blocks[i].x;
     };
   
-    getBlockYCoord(index) {
-        return this.blocks[index].y;
+    getBlockYCoord(i) {
+        return this.blocks[i].y;
     };
 
     getMinX() {
@@ -49,17 +49,17 @@ class TetrixPiece {
                           .reduce((acc, y) => acc < y ? y : acc);       
     };
 
-    setBlockXCoord(index, value) {
-        this.blocks[index].x = value;
+    setBlockXCoord(i, value) {
+        this.blocks[i].x = value;
     };
 
-    setBlockYCoord(index, value) {
-        this.blocks[index].y = value;
+    setBlockYCoord(i, value) {
+        this.blocks[i].y = value;
     };
 
-    setBlockCoord(index, x, y) {
-        this.blocks[index].x = x;
-        this.blocks[index].y = y;
+    setBlockCoord(i, x, y) {
+        this.blocks[i].x = x;
+        this.blocks[i].y = y;
     };
 }
 
