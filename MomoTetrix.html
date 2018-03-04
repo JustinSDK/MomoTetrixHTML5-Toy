@@ -42,8 +42,8 @@
                 var stackArea = new TetrixStackArea(images, 25, tetrixGround);
                 
                 var stackareaCanvas = document.getElementById('stackarea');
-                stackareaCanvas.width = stackArea.getWidth();
-                stackareaCanvas.height = stackArea.getHeight();
+                stackareaCanvas.width = stackArea.width;
+                stackareaCanvas.height = stackArea.height;
                 var stackareaContext = stackareaCanvas.getContext('2d');
                 stackArea.paint(stackareaContext);
                 

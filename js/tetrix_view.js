@@ -40,40 +40,39 @@ class TetrixBox {
 }
 
 function TetrixStackArea(images, blockWidth, tetrixGround) {
-    var backgroundColor = rgb(255, 255, 255);
-    var width = tetrixGround.xblocks * blockWidth;
-    var height = tetrixGround.yblocks * blockWidth;
-                
-    var isBlockBorder = false;
+    this.backgroundColor = rgb(255, 255, 255);
+    this.width = tetrixGround.xblocks * blockWidth;
+    this.height = tetrixGround.yblocks * blockWidth;       
+    this.isBlockBorder = false;
     
-    this.setBackgroundColor = function(color) {
-        backgroundColor = color;
-    };
+    // this.setBackgroundColor = function(color) {
+    //     backgroundColor = color;
+    // };
     
-    this.getBackgroundColor = function() {
-        return backgroundColor;
-    };
+    // this.getBackgroundColor = function() {
+    //     return backgroundColor;
+    // };
     
-    this.setBlockBorder = function(flag) {
-        isBlockBorder = flag;
-    };
+    // this.setBlockBorder = function(flag) {
+    //     isBlockBorder = flag;
+    // };
     
-    this.isBlockBorder = function() {
-        return isBlockBorder;
-    };
+    // this.isBlockBorder = function() {
+    //     return isBlockBorder;
+    // };
     
-    this.getWidth = function() {
-        return width;
-    };
+    // this.getWidth = function() {
+    //     return width;
+    // };
     
-    this.getHeight = function() {
-        return height;
-    };
+    // this.getHeight = function() {
+    //     return height;
+    // };
         
     function drawBlock(context, image, x, y) {
         context.drawImage(image, x * blockWidth, y * blockWidth, blockWidth, blockWidth);
         
-        if(isBlockBorder) {
+        if(this.isBlockBorder) {
             context.beginPath();
             context.strokeStyle = 'rgb(150, 150, 150)';
             context.drawRect(x * blockWidth, y * blockWidth, blockWidth, blockWidth);
@@ -83,8 +82,8 @@ function TetrixStackArea(images, blockWidth, tetrixGround) {
     
     this.paint = function(context) {
         // clean previous screen
-        context.fillStyle = backgroundColor;
-        context.fillRect(0, 0, width, height);
+        context.fillStyle = this.backgroundColor;
+        context.fillRect(0, 0, this.width, this.height);
 
         // draw current piece
         for(var i = 0; i < 4; i++) {
@@ -110,7 +109,7 @@ function TetrixStackArea(images, blockWidth, tetrixGround) {
             context.shadowColor = 'black';
             context.font = blockWidth + 'px "Arial Black"';
             context.fillStyle = 'red';
-            context.fillText('Game over', width / 5, height / 2);
+            context.fillText('Game over', this.width / 5, this.height / 2);
             context.restore();
         }
     };

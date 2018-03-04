@@ -28,8 +28,8 @@
     
             var stackArea = new TetrixStackArea(images, 25, tetrixGround);
             var canvas1 = document.getElementById('canvas');
-            canvas1.width = stackArea.getWidth();
-            canvas1.height = stackArea.getHeight();
+            canvas1.width = stackArea.width;
+            canvas1.height = stackArea.height;
             
             var context = canvas1.getContext('2d');
             
