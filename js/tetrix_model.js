@@ -115,7 +115,6 @@ class TetrixGround {
     constructor(xblocks = 10, yblocks = 20) {
         this.xblocks = xblocks;
         this.yblocks = yblocks;
-
         this.ground = Array(xblocks)
             .fill()
             .map(_ => Array(yblocks).fill(0));
@@ -213,10 +212,16 @@ class TetrixGround {
         });
 
         if (rotatable) {
-            this.tetrixPiece.blocks.forEach((block, i) => {
-                block.x = this.testPiece.blocks[i].x;
-                block.y = this.testPiece.blocks[i].y;
-            });
+            // this.tetrixPiece.blocks.forEach((block, i) => {
+            //     block.x = this.testPiece.blocks[i].x;
+            //     block.y = this.testPiece.blocks[i].y;
+            // });
+            if (clockwise) {
+                this.tetrixPiece.rotateRight();
+            }
+            else {
+                this.tetrixPiece.rotateLeft();
+            }
         }
     };
 
