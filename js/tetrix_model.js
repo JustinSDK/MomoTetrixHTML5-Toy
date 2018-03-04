@@ -145,10 +145,10 @@ function TetrixGround(xblocks = 10, yblocks = 20) {
         testPiece = new TetrixPiece(pieceType);    
         xOffset = xblocks / 2 - 1;
         yOffset = tetrixPiece.minimumY < 0 ? Math.abs(tetrixPiece.minimumY) : 0;
-        isGameover = !tetrixPiece.blocks.every(block => {
+        isGameover = tetrixPiece.blocks.some(block => {
             let x = block.x + xOffset;
             let y = block.y + yOffset;
-            return ground[x][y] == 0;
+            return ground[x][y] != 0;
         });
     };
     
