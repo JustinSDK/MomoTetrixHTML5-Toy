@@ -14,10 +14,10 @@
             const groundBlocksX = 10;
             const groundBlocksY = 20;
 
-            var images = [];
-            for(var i = 0; i < 7; i++) {
+            let images = [];
+            for(let i = 0; i < 7; i++) {
                 images[i] = new Image();
-                images[i].src = 'images/' + (i + 1) + '.jpg';
+                images[i].src = `images/${i + 1}.jpg`;
             }
 
             let canvas = document.createElement('canvas');

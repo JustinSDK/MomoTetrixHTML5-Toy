@@ -9,16 +9,16 @@
         <script type="text/javascript" src="js/tetrix_model.js"></script>
         <script type="text/javascript" src="js/tetrix_view.js"></script>
         <script type="text/javascript">
-            var images = [];
-            for(var i = 0; i < 7; i++) {
+            let images = [];
+            for(let i = 0; i < 7; i++) {
                 images[i] = new Image();
-                images[i].src = 'images/' + (i + 1) + '.jpg';
+                images[i].src = `images/${i + 1}.jpg`;
             }
     
             let canvas = document.getElementById('canvas');
             canvas.width = 100;
             canvas.height = 100;
-            var tetrixBox = new TetrixBox(images, canvas);
+            let tetrixBox = new TetrixBox(images, canvas);
             
             setTimeout(function() {
                 let piece = TetrixPiece.randomFreezePiece();
