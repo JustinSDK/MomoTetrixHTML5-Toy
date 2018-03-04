@@ -39,10 +39,10 @@ class TetrixBox {
     }    
 }
 
-function TetrixStackArea(tetrixBox, tetrixGround) {
+function TetrixStackArea(images, blockWidth, tetrixGround) {
     var backgroundColor = rgb(255, 255, 255);
-    var width = tetrixGround.xblocks * tetrixBox.blockWidth;
-    var height = tetrixGround.yblocks * tetrixBox.blockWidth;
+    var width = tetrixGround.xblocks * blockWidth;
+    var height = tetrixGround.yblocks * blockWidth;
                 
     var isBlockBorder = false;
     
@@ -71,7 +71,7 @@ function TetrixStackArea(tetrixBox, tetrixGround) {
     };
         
     function drawBlock(context, image, x, y) {
-        let bw = tetrixBox.blockWidth;
+        let bw = blockWidth;
         context.drawImage(image, x * bw, y * bw, bw, bw);
         
         if(isBlockBorder) {
@@ -89,7 +89,7 @@ function TetrixStackArea(tetrixBox, tetrixGround) {
 
         // draw current piece
         for(var i = 0; i < 4; i++) {
-            drawBlock(context, tetrixBox.images[tetrixGround.tetrixPiece.type],
+            drawBlock(context, images[tetrixGround.tetrixPiece.type],
                     tetrixGround.tetrixPiece.xOfBlock(i) + tetrixGround.xOffset,
                     tetrixGround.tetrixPiece.yOfBlock(i) + tetrixGround.yOffset);
         }
@@ -100,12 +100,12 @@ function TetrixStackArea(tetrixBox, tetrixGround) {
                 if(tetrixGround.ground[i][j] == 0) {
                     continue;
                 }
-                drawBlock(context, tetrixBox.images[tetrixGround.ground[i][j] - 1], i, j);
+                drawBlock(context, images[tetrixGround.ground[i][j] - 1], i, j);
             }
         }
 
         if(tetrixGround.isGameover) {
-            let bw = tetrixBox.width / 4;
+            let bw = box.width / 4;
             context.save();
             context.shadowOffsetX = 1;
             context.shadowOffsetY = 1;

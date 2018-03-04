@@ -26,7 +26,7 @@
             var tetrixGround = new TetrixGround(10, 20);
             tetrixGround.addPieceOfType(piece.type);
     
-            var stackArea = new TetrixStackArea(tetrixBox, tetrixGround);
+            var stackArea = new TetrixStackArea(images, 25, tetrixGround);
             var canvas1 = document.getElementById('canvas');
             canvas1.width = stackArea.getWidth();
             canvas1.height = stackArea.getHeight();
