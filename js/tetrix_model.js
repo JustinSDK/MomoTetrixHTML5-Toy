@@ -201,9 +201,10 @@ function TetrixGround(xblocks = 10, yblocks = 20) {
     };
 
     this.rotateTetrix = function(clockwise) {
-        for(var i = 0; i < 4; i++) {
-            testPiece.setBlockCoord(i, tetrixPiece.xOfBlock(i), tetrixPiece.yOfBlock(i));
-        }
+        testPiece.blocks.forEach((block, i) => {
+            block.x = tetrixPiece.blocks[i].x;
+            block.y = tetrixPiece.blocks[i].y;
+        });
 
         if(clockwise) {
             testPiece.rotateRight();
@@ -212,21 +213,17 @@ function TetrixGround(xblocks = 10, yblocks = 20) {
             testPiece.rotateLeft();
         }
 
-        for(var i = 0; i < 4; i++) {
-            var x = testPiece.xOfBlock(i) + xOffset;
-            var y = testPiece.yOfBlock(i) + yOffset;
-
-            if(x < 0 || x >= xblocks || y >= yblocks || y < 0) {
-                return;
-            }
-
-            if(ground[x][y] != 0) {
-                return;
-            }
-        } 
+        let rotatable = testPiece.blocks.every(block => {
+            let x = block.x + xOffset;
+            let y = block.y + yOffset;
+            return x >= 0 && x < xblocks && y < yblocks && y >= 0 && ground[x][y] == 0;
+        });
        
-        for(var i = 0; i < 4; i++) {
-            tetrixPiece.setBlockCoord(i, testPiece.xOfBlock(i), testPiece.yOfBlock(i));
+        if(rotatable) {
+            tetrixPiece.blocks.forEach((block, i) => {
+                block.x = testPiece.blocks[i].x;
+                block.y = testPiece.blocks[i].y;
+            });
         }
     };
     

@@ -37,6 +37,7 @@
                 if(tetrixGround.isMovable(0, 1)) {
                     tetrixGround.moveTetrixRight();
                     tetrixGround.moveTetrixDown();
+                    tetrixGround.rotateTetrix(true);
                     tetrixGround.updateGround();
                     stackArea.paint(context);
                 }
