@@ -100,3 +100,16 @@ TetrixPiece.FREEZE = Object.freeze({
 
 Object.freeze(TetrixPiece);
 
+const pieces = [
+    TetrixPiece.FREEZE.Z, 
+    TetrixPiece.FREEZE.S,  
+    TetrixPiece.FREEZE.I,  
+    TetrixPiece.FREEZE.J, 
+    TetrixPiece.FREEZE.O, 
+    TetrixPiece.FREEZE.T, 
+    TetrixPiece.FREEZE.L 
+];
+function randomFreezePiece() {
+    let index = parseInt(Math.random() * 7);
+    return pieces[index];
+}

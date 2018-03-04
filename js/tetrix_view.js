@@ -13,43 +13,35 @@ const tetrixPieces = [
 ];
    
 class TetrixBox {
-    constructor(images, box = {width: 100, height: 100}, block = {width: 25, height: 25}) {
+    constructor(images, canvas) {
         this.images = images;
-        this.box = box;
-        this.block = block;
         this.backgroundColor = rgb(255, 255, 255);
         this.border = false;
-        this.currentPiece = null;
-        this.currentImage = null;
+        this.canvas = canvas;
     }
 
     get width() {
-        return this.box.width;
+        return this.canvas.width;
     }
-    
-    get height() {
-        return this.box.height;
-    }
-    
-    next() {
-        let index = parseInt(Math.random() * 7);
-        this.currentPiece = tetrixPieces[index];
-        this.currentImage = this.images[index];
-    };
 
-    paint(context) {
+    get height() {
+        return this.canvas.height;
+    }
+
+    paint(piece) {
         // draw box background
+        let context = this.canvas.getContext('2d');
         context.fillStyle = this.backgroundColor;
         context.fillRect(0, 0, this.width, this.height);
-        this.currentPiece.blocks.forEach(b => {
-            this.drawBlock(context, b.x + 1, b.y + 1);
+        piece.blocks.forEach(b => {
+            this.drawBlock(context, piece, b.x + 1, b.y + 1);
         });
     }
     
-    drawBlock(context, x, y) {
-        let bw = this.block.width;
-        let bh = this.block.height;
-        context.drawImage(this.currentImage, x * bw, y * bh, bw, bh);
+    drawBlock(context, piece, x, y) {
+        let bw = this.width / 4;
+        let bh = this.height / 4;
+        context.drawImage(this.images[piece.type], x * bw, y * bh, bw, bh);
         if(this.border) {
             context.beginPath();
             context.strokeStyle = rgb(150, 150, 150);
@@ -299,8 +291,8 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
 
 function TetrixStackArea(tetrixBox, tetrixGround) {
     var backgroundColor = rgb(255, 255, 255);
-    var width = tetrixGround.getGroundWidthInBlk() * tetrixBox.block.width;
-    var height = tetrixGround.getGroundHeightInBlk() * tetrixBox.block.height;
+    var width = tetrixGround.getGroundWidthInBlk() * tetrixBox.width / 4;
+    var height = tetrixGround.getGroundHeightInBlk() * tetrixBox.height / 4;
                 
     var isBlockBorder = false;
     
@@ -329,14 +321,14 @@ function TetrixStackArea(tetrixBox, tetrixGround) {
     };
         
     function drawBlock(context, image, x, y) {
-        context.drawImage(image, x * tetrixBox.block.width, y * tetrixBox.block.height, 
-                tetrixBox.block.width, tetrixBox.block.height);
+        let bw = tetrixBox.width / 4;
+        let bh = tetrixBox.height / 4;
+        context.drawImage(image, x * bw, y * bh, bw, bh);
         
         if(isBlockBorder) {
             context.beginPath();
             context.strokeStyle = 'rgb(150, 150, 150)';
-            context.drawRect(x * tetrixBox.block.width, y * tetrixBox.block.height, 
-                    tetrixBox.block.width, tetrixBox.block.height);
+            context.drawRect(x * bw, y * bh, bw, bh);
             context.stroke();
         }
     }
@@ -364,11 +356,12 @@ function TetrixStackArea(tetrixBox, tetrixGround) {
         }
 
         if(tetrixGround.isGameover()) {
+            let bw = tetrixBox.width / 4;
             context.save();
             context.shadowOffsetX = 1;
             context.shadowOffsetY = 1;
             context.shadowColor = 'black';
-            context.font = tetrixBox.block.width + 'px "Arial Black"';
+            context.font = bw + 'px "Arial Black"';
             context.fillStyle = 'red';
             context.fillText('Game over', width / 5, height / 2);
             context.restore();

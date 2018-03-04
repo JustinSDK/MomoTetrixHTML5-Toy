@@ -6,23 +6,25 @@
         <script type="text/javascript" src="js/tetrix_view.js"></script>
         <script type="text/javascript">
             window.onload = function() {        
-                
-        
                 var images = [];
                 for(var i = 0; i < 7; i++) {
                     images[i] = new Image();
                     images[i].src = 'images/' + (i + 1) + '.jpg';
                 }
-        
-                var tetrixBox = new TetrixBox(images);
+
+                let canvas = document.createElement('canvas');
+                canvas.width = 100;
+                canvas.height = 100;        
+                var tetrixBox = new TetrixBox(images, canvas);
                 tetrixBox.backgroundColor = rgb(0, 0, 0);
-                tetrixBox.next();
         
+                let piece = randomFreezePiece();
+
                 var tetrixGround = new TetrixGround(10, 20);
-                tetrixGround.addPieceOfType(tetrixBox.currentPiece.type);
+                tetrixGround.addPieceOfType(piece.type);
         
                 var stackArea = new TetrixStackArea(tetrixBox, tetrixGround);
-                var canvas1 = document.getElementById('canvas1');
+                var canvas1 = document.getElementById('canvas');
                 canvas1.width = stackArea.getWidth();
                 canvas1.height = stackArea.getHeight();
                 
@@ -36,8 +38,8 @@
                         stackArea.paint(context);
                     }
                     else {
-                        tetrixGround.addPieceOfType(tetrixBox.currentPiece.type);
-                        tetrixBox.next();
+                        tetrixGround.addPieceOfType(piece.type);
+                        piece = randomFreezePiece();
                     }
                     
                     setTimeout(arguments.callee, 100);
@@ -46,6 +48,6 @@
         </script>
     </head>
     <body>       
-        <canvas id="canvas1" style="border-width: 1px; border-style: solid;"></canvas>
+        <canvas id="canvas" style="border-width: 1px; border-style: solid;"></canvas>
     </body>
 </html>
