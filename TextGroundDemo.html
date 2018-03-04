@@ -2,52 +2,53 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <script type="text/javascript" src="js/tetrix_model.js"></script>
-        <script type="text/javascript" src="js/tetrix_view.js"></script>
-        <script type="text/javascript">
-            window.onload = function() {        
-                var images = [];
-                for(var i = 0; i < 7; i++) {
-                    images[i] = new Image();
-                    images[i].src = 'images/' + (i + 1) + '.jpg';
-                }
-
-                let canvas = document.createElement('canvas');
-                canvas.width = 100;
-                canvas.height = 100;        
-                var tetrixBox = new TetrixBox(images, canvas);
-                tetrixBox.backgroundColor = rgb(0, 0, 0);
-        
-                let piece = randomFreezePiece();
-
-                var tetrixGround = new TetrixGround(10, 20);
-                tetrixGround.addPieceOfType(piece.type);
-        
-                var stackArea = new TetrixStackArea(tetrixBox, tetrixGround);
-                var canvas1 = document.getElementById('canvas');
-                canvas1.width = stackArea.getWidth();
-                canvas1.height = stackArea.getHeight();
-                
-                var context = canvas1.getContext('2d');
-                
-                setTimeout(function() {
-                    if(tetrixGround.isMovable(0, 1)) {
-                        tetrixGround.moveTetrixRight();
-                        tetrixGround.moveTetrixDown();
-                        tetrixGround.updateGround();
-                        stackArea.paint(context);
-                    }
-                    else {
-                        tetrixGround.addPieceOfType(piece.type);
-                        piece = randomFreezePiece();
-                    }
-                    
-                    setTimeout(arguments.callee, 100);
-                }, 100);
-            };
-        </script>
     </head>
     <body>       
         <canvas id="canvas" style="border-width: 1px; border-style: solid;"></canvas>
+
+
+        <script type="text/javascript" src="js/tetrix_model.js"></script>
+        <script type="text/javascript" src="js/tetrix_view.js"></script>
+        <script type="text/javascript">   
+            var images = [];
+            for(var i = 0; i < 7; i++) {
+                images[i] = new Image();
+                images[i].src = 'images/' + (i + 1) + '.jpg';
+            }
+
+            let canvas = document.createElement('canvas');
+            canvas.width = 100;
+            canvas.height = 100;        
+            var tetrixBox = new TetrixBox(images, canvas);
+            tetrixBox.backgroundColor = rgb(0, 0, 0);
+    
+            let piece = randomFreezePiece();
+
+            var tetrixGround = new TetrixGround(10, 20);
+            tetrixGround.addPieceOfType(piece.type);
+    
+            var stackArea = new TetrixStackArea(tetrixBox, tetrixGround);
+            var canvas1 = document.getElementById('canvas');
+            canvas1.width = stackArea.getWidth();
+            canvas1.height = stackArea.getHeight();
+            
+            var context = canvas1.getContext('2d');
+            
+            setTimeout(function() {
+                if(tetrixGround.isMovable(0, 1)) {
+                    tetrixGround.moveTetrixRight();
+                    tetrixGround.moveTetrixDown();
+                    tetrixGround.updateGround();
+                    stackArea.paint(context);
+                }
+                else {
+                    tetrixGround.addPieceOfType(piece.type);
+                    piece = randomFreezePiece();
+                }
+                
+                setTimeout(arguments.callee, 100);
+            }, 100);
+
+        </script>        
     </body>
 </html>

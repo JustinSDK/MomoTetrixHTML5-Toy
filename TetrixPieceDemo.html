@@ -2,30 +2,29 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <script type="text/javascript" src="js/tetrix_model.js"></script>
-        <script type="text/javascript" src="js/tetrix_view.js"></script>
-        <script type="text/javascript">
-            window.onload = function() {
-                var images = [];
-                for(var i = 0; i < 7; i++) {
-                    images[i] = new Image();
-                    images[i].src = 'images/' + (i + 1) + '.jpg';
-                }
-        
-                let canvas = document.getElementById('canvas');
-                canvas.width = 100;
-                canvas.height = 100;
-                var tetrixBox = new TetrixBox(images, canvas);
-                
-                setTimeout(function() {
-                    let piece = randomFreezePiece();
-                    tetrixBox.paint(piece);
-                    setTimeout(arguments.callee, 1000);
-                }, 1000);
-            };
-        </script>
     </head>
     <body>       
         <canvas id="canvas"></canvas>
+
+        <script type="text/javascript" src="js/tetrix_model.js"></script>
+        <script type="text/javascript" src="js/tetrix_view.js"></script>
+        <script type="text/javascript">
+            var images = [];
+            for(var i = 0; i < 7; i++) {
+                images[i] = new Image();
+                images[i].src = 'images/' + (i + 1) + '.jpg';
+            }
+    
+            let canvas = document.getElementById('canvas');
+            canvas.width = 100;
+            canvas.height = 100;
+            var tetrixBox = new TetrixBox(images, canvas);
+            
+            setTimeout(function() {
+                let piece = randomFreezePiece();
+                tetrixBox.paint(piece);
+                setTimeout(arguments.callee, 1000);
+            }, 1000);
+        </script>        
     </body>
 </html>
