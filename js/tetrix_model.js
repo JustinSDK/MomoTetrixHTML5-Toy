@@ -30,43 +30,23 @@ class TetrixPiece {
     };
 
     getMinX() {
-        let n = this.blocks[0].x;
-        for(let i = 1 ; i < 4 ; i++) {
-            if(n > this.blocks[i].x) {
-                n = this.blocks[i].x;
-            }
-        }
-        return n;
+        return this.blocks.map(b => b.x)
+                          .reduce((acc, x) => acc > x ? x : acc);
     };
 
     getMaxX() {
-        let n = this.blocks[0].x;
-        for(let i = 1 ; i < 4 ; i++) {
-            if(n < this.blocks[i].x) {
-                n = this.blocks[i].x;
-            }
-        }
-        return n;
+        return this.blocks.map(b => b.x)
+                          .reduce((acc, x) => acc < x ? x : acc);
     };
 
     getMinY() {
-        let n = this.blocks[0].y;
-        for(let i = 1; i < 4; i++) {
-            if(n > this.blocks[i].y) {
-                n = this.blocks[i].y;
-            }
-        }
-        return n;
+        return this.blocks.map(b => b.y)
+                          .reduce((acc, y) => acc > y ? y : acc);
     };
 
     getMaxY() {
-        let n = this.blocks[0].y;
-        for(let i = 1; i < 4; i++) {
-            if (n < this.blocks[i].y) {
-                n = this.blocks[i].y;
-            }
-        }
-        return n;
+        return this.blocks.map(b => b.y)
+                          .reduce((acc, y) => acc < y ? y : acc);       
     };
 
     setBlockXCoord(index, value) {
