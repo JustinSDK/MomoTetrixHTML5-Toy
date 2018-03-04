@@ -162,18 +162,11 @@ function TetrixGround(xblocks = 10, yblocks = 20) {
         isOperable = true;
         
         xOffset = parseInt(xblocks / 2) - 1;
-        if(tetrixPiece.minimumY < 0) {
-            yOffset = Math.abs(tetrixPiece.minimumY);
-        }
-        else {
-            yOffset = 0;
-        }
+        yOffset = tetrixPiece.maximumY < 0 ? Math.abs(tetrixPiece.minimumY) : 0;
         
-        for(var i = 0; i < xblocks; i++) {
-            for(var j = 0; j < yblocks; j++) {
-                ground[i][j] = 0;
-            }
-        }
+        ground = Array(xblocks)
+                   .fill()
+                   .map(_ => Array(yblocks).fill(0));
     };
     
     this.moveTetrixLeft = function() {
