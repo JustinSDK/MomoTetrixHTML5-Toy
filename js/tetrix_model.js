@@ -124,10 +124,6 @@ const pieces = [
     TetrixPiece.FREEZE.T,
     TetrixPiece.FREEZE.L
 ];
-// function randomFreezePiece() {
-//     let index = parseInt(Math.random() * 7);
-//     return pieces[index];
-// }
 
 class TetrixGround {
     constructor(xblocks = 10, yblocks = 20) {
