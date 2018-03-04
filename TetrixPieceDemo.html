@@ -21,7 +21,7 @@
             var tetrixBox = new TetrixBox(images, canvas);
             
             setTimeout(function() {
-                let piece = randomFreezePiece();
+                let piece = TetrixPiece.randomFreezePiece();
                 tetrixBox.paint(piece);
                 setTimeout(arguments.callee, 1000);
             }, 1000);

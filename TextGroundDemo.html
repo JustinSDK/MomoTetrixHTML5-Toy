@@ -27,7 +27,7 @@
             var tetrixBox = new TetrixBox(images, canvas);
             tetrixBox.backgroundColor = rgb(0, 0, 0);
     
-            let piece = randomFreezePiece();
+            let piece = TetrixPiece.randomFreezePiece();
 
             var tetrixGround = new TetrixGround(groundBlocksX, groundBlocksY);
             tetrixGround.addPieceOfType(piece.type);
@@ -47,7 +47,7 @@
                 }
                 else {
                     tetrixGround.addPieceOfType(piece.type);
-                    piece = randomFreezePiece();
+                    piece = TetrixPiece.randomFreezePiece();
                 }
                 
                 if(!tetrixGround.isGameover) {

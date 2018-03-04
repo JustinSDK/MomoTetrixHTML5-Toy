@@ -87,6 +87,10 @@ class TetrixPiece {
         return this.blocks.map(b => b.y)
             .reduce((acc, y) => acc < y ? y : acc);
     }
+
+    static randomFreezePiece() {
+        return pieces[parseInt(Math.random() * 7)];
+    }
 }
 
 TetrixPiece.TYPE = Object.freeze({
@@ -120,10 +124,10 @@ const pieces = [
     TetrixPiece.FREEZE.T,
     TetrixPiece.FREEZE.L
 ];
-function randomFreezePiece() {
-    let index = parseInt(Math.random() * 7);
-    return pieces[index];
-}
+// function randomFreezePiece() {
+//     let index = parseInt(Math.random() * 7);
+//     return pieces[index];
+// }
 
 class TetrixGround {
     constructor(xblocks = 10, yblocks = 20) {
