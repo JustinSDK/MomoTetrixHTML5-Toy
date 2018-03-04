@@ -5,17 +5,19 @@ class TetrixPiece {
 
     rotateLeft() {
         for(let i = 0; i < 4; i++) {
-            let tmp = this.getBlockXCoord(i);  
-            this.setBlockXCoord(i, this.getBlockYCoord(i));
-            this.setBlockYCoord(i, -tmp);
+            let x = this.getBlockYCoord(i);
+            let y = -this.getBlockXCoord(i);  
+            this.setBlockXCoord(i, x);
+            this.setBlockYCoord(i, y);
         }
     };
 
     rotateRight() {
         for(let i = 0; i < 4; i++) {
-            let tmp = this.getBlockXCoord(i);
-            this.setBlockXCoord(i, -this.getBlockYCoord(i));
-            this.setBlockYCoord(i, tmp);
+            let x = -this.getBlockYCoord(i);
+            let y = this.getBlockXCoord(i);
+            this.setBlockXCoord(i, x);
+            this.setBlockYCoord(i, y);
         }
     };
     
@@ -100,7 +102,5 @@ const BLOCKS = [
     [[ 1,-1], [ 0,-1], [ 0, 0], [ 0, 1]]
 ];
                             
-function rgb(r, g, b) {
-    return `rgb(${r}, ${g}, ${b})`;
-}
+
               

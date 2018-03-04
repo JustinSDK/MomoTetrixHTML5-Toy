@@ -1,3 +1,7 @@
+function rgb(r, g, b) {
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
 function TetrixBox(boxWidthInBlk, boxHeightInBlk, 
                    blockWidth,  blockHeight) {
     boxWidthInBlk = boxWidthInBlk || 4;
