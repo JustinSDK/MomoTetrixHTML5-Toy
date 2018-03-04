@@ -15,13 +15,11 @@ function drawBlock(context, image, x, y, blockWidth, border) {
 class TetrixBox {
     constructor(images, canvas) {
         this.images = images;
+        this.canvas = canvas;
+
+        this.width = canvas.width;
         this.backgroundColor = rgb(255, 255, 255);
         this.border = false;
-        this.canvas = canvas;
-    }
-
-    get width() {
-        return this.canvas.width;
     }
 
     paint(piece) {
@@ -35,46 +33,51 @@ class TetrixBox {
     }
 }
 
-function TetrixStackArea(images, canvas) {
-    this.backgroundColor = rgb(255, 255, 255);
-    this.width = canvas.width;
-    this.height = canvas.height;       
-    this.isBlockBorder = false;
-    this.context = canvas.getContext('2d');
+class TetrixStackArea {
+    constructor(images, canvas) {
+        this.images = images;
+        this.canvas = canvas;
+
+        this.width = canvas.width;
+        this.height = canvas.height;       
+        this.backgroundColor = rgb(255, 255, 255);
+        this.border = false;
+    }
     
-    this.paint = function(tetrixGround) {
-        let blockWidth = canvas.width / tetrixGround.xblocks;
+    paint(tetrixGround) {
+        let blockWidth = this.width / tetrixGround.xblocks;
+        let context = canvas.getContext('2d');
         // clean previous screen
-        this.context.fillStyle = this.backgroundColor;
-        this.context.fillRect(0, 0, this.width, this.height);
+        context.fillStyle = this.backgroundColor;
+        context.fillRect(0, 0, this.width, this.height);
 
         // draw current piece
         tetrixGround.tetrixPiece.blocks.forEach(block => {
-             drawBlock(this.context, images[tetrixGround.tetrixPiece.type],
+             drawBlock(context, images[tetrixGround.tetrixPiece.type],
                     block.x + tetrixGround.xOffset,
                     block.y + tetrixGround.yOffset,
-                    blockWidth, this.isBlockBorder);
+                    blockWidth, this.border);
         });
 
         // draw stack of pieces
         for(var i = 0; i < tetrixGround.xblocks; i++) {
             for(var j = 0; j < tetrixGround.yblocks; j++) {
                 if(tetrixGround.ground[i][j] != 0) {
-                    drawBlock(this.context, images[tetrixGround.ground[i][j] - 1], i, j,
-                        blockWidth, this.isBlockBorder);
+                    drawBlock(context, images[tetrixGround.ground[i][j] - 1], i, j,
+                        blockWidth, this.border);
                 }
             }
         }
 
         if(tetrixGround.isGameover) {
-            this.context.save();
-            this.context.shadowOffsetX = 1;
-            this.context.shadowOffsetY = 1;
-            this.context.shadowColor = 'black';
-            this.context.font = blockWidth + 'px "Arial Black"';
-            this.context.fillStyle = 'red';
-            this.context.fillText('Game over', this.width / 5, this.height / 2);
-            this.context.restore();
+            context.save();
+            context.shadowOffsetX = 1;
+            context.shadowOffsetY = 1;
+            context.shadowColor = 'black';
+            context.font = blockWidth + 'px "Arial Black"';
+            context.fillStyle = 'red';
+            context.fillText('Game over', this.width / 5, this.height / 2);
+            context.restore();
         }
-    };
+    }
 }
