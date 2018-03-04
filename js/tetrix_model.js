@@ -1,3 +1,26 @@
+TetrixPiece.Z = 0;
+TetrixPiece.S = 1;
+TetrixPiece.I = 2;
+TetrixPiece.J = 3;
+TetrixPiece.O = 4;
+TetrixPiece.T = 5;
+TetrixPiece.L = 6;
+
+function block(x, y) {
+    return {x, y};
+}
+
+// seven types of pieces
+const BLOCKS = [
+    [block( 0, -1), block(0,  0), block(-1, 0), block(-1, 1)],
+    [block( 0, -1), block(0,  0), block( 1, 0), block( 1, 1)], 
+    [block( 0, -1), block(0,  0), block( 0, 1), block( 0, 2)], 
+    [block(-1,  0), block(0,  0), block( 1, 0), block( 0, 1)],
+    [block( 0,  0), block(1,  0), block( 0, 1), block( 1, 1)],
+    [block(-1, -1), block(0, -1), block( 0, 0), block( 0, 1)],
+    [block( 1, -1), block(0, -1), block( 0, 0), block( 0, 1)]
+];
+                            
 class TetrixPiece {
     constructor(type) {
         this.blocks = BLOCKS[type].map(b => block(b.x, b.y));
@@ -61,28 +84,3 @@ class TetrixPiece {
     };
 }
 
-TetrixPiece.Z = 0;
-TetrixPiece.S = 1;
-TetrixPiece.I = 2;
-TetrixPiece.J = 3;
-TetrixPiece.O = 4;
-TetrixPiece.T = 5;
-TetrixPiece.L = 6;
-
-function block(x, y) {
-    return {x, y};
-}
-
-// seven types of pieces
-const BLOCKS = [
-    [block( 0, -1), block(0,  0), block(-1, 0), block(-1, 1)],
-    [block( 0, -1), block(0,  0), block( 1, 0), block( 1, 1)], 
-    [block( 0, -1), block(0,  0), block( 0, 1), block( 0, 2)], 
-    [block(-1,  0), block(0,  0), block( 1, 0), block( 0, 1)],
-    [block( 0,  0), block(1,  0), block( 0, 1), block( 1, 1)],
-    [block(-1, -1), block(0, -1), block( 0, 0), block( 0, 1)],
-    [block( 1, -1), block(0, -1), block( 0, 0), block( 0, 1)]
-];
-                            
-
-              
