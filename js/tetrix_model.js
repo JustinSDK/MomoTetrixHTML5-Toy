@@ -77,6 +77,16 @@ class TetrixPiece {
     };
 }
 
+TetrixPiece.TYPE = Object.freeze({
+    Z: 0,
+    S: 1,
+    I: 2,
+    J: 3,
+    O: 4,
+    T: 5,
+    L: 6,
+});
+
 TetrixPiece.Z = 0;
 TetrixPiece.S = 1;
 TetrixPiece.I = 2;

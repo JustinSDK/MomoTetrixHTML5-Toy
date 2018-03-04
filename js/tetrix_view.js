@@ -11,13 +11,13 @@ function TetrixBox(boxWidthInBlk, boxHeightInBlk,
     
     var isBlockBorder = false;
     var tetrixPieces = [
-        new TetrixPiece(TetrixPiece.Z), 
-        new TetrixPiece(TetrixPiece.S), 
-        new TetrixPiece(TetrixPiece.I), 
-        new TetrixPiece(TetrixPiece.J), 
-        new TetrixPiece(TetrixPiece.O), 
-        new TetrixPiece(TetrixPiece.T), 
-        new TetrixPiece(TetrixPiece.L)
+        new TetrixPiece(TetrixPiece.TYPE.Z), 
+        new TetrixPiece(TetrixPiece.TYPE.S), 
+        new TetrixPiece(TetrixPiece.TYPE.I), 
+        new TetrixPiece(TetrixPiece.TYPE.J), 
+        new TetrixPiece(TetrixPiece.TYPE.O), 
+        new TetrixPiece(TetrixPiece.TYPE.T), 
+        new TetrixPiece(TetrixPiece.TYPE.L)
     ];
     
     // default background: rgb(255, 255, 255)
@@ -106,8 +106,8 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
     var groundWidthInBlk = groundWidthInBlk || 10;
     var groundHeightInBlk = groundHeightInBlk || 20;
         
-    var tetrixPiece = new TetrixPiece(parseInt(Math.random() * 7));
-    var testPiece = new TetrixPiece(parseInt(Math.random() * 7));
+    var tetrixPiece;
+    var testPiece;
     var ground = [];
     for(var i = 0; i < groundWidthInBlk; i++) {
         ground[i] = [];
