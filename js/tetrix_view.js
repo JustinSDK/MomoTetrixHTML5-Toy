@@ -2,7 +2,6 @@ function rgb(r, g, b) {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-
 function drawBlock(context, image, x, y, blockWidth, border) {
     context.drawImage(image, x * blockWidth, y * blockWidth, blockWidth, blockWidth);
     if(border) {
@@ -12,7 +11,6 @@ function drawBlock(context, image, x, y, blockWidth, border) {
         context.stroke();
     }
 }  
-
 
 class TetrixBox {
     constructor(images, canvas) {
@@ -51,21 +49,20 @@ function TetrixStackArea(images, canvas) {
         this.context.fillRect(0, 0, this.width, this.height);
 
         // draw current piece
-        for(var i = 0; i < 4; i++) {
-            drawBlock(this.context, images[tetrixGround.tetrixPiece.type],
-                    tetrixGround.tetrixPiece.xOfBlock(i) + tetrixGround.xOffset,
-                    tetrixGround.tetrixPiece.yOfBlock(i) + tetrixGround.yOffset,
+        tetrixGround.tetrixPiece.blocks.forEach(block => {
+             drawBlock(this.context, images[tetrixGround.tetrixPiece.type],
+                    block.x + tetrixGround.xOffset,
+                    block.y + tetrixGround.yOffset,
                     blockWidth, this.isBlockBorder);
-        }
+        });
 
         // draw stack of pieces
         for(var i = 0; i < tetrixGround.xblocks; i++) {
             for(var j = 0; j < tetrixGround.yblocks; j++) {
-                if(tetrixGround.ground[i][j] == 0) {
-                    continue;
+                if(tetrixGround.ground[i][j] != 0) {
+                    drawBlock(this.context, images[tetrixGround.ground[i][j] - 1], i, j,
+                        blockWidth, this.isBlockBorder);
                 }
-                drawBlock(this.context, images[tetrixGround.ground[i][j] - 1], i, j,
-                    blockWidth, this.isBlockBorder);
             }
         }
 
