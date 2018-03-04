@@ -1,6 +1,6 @@
 class TetrixPiece {
     constructor(type) {
-        this.blocks = BLOCKS[type].reduce((acc, block) => acc.concat([block.concat()]), []);
+        this.blocks = BLOCKS[type].map(b => block(b.x, b.y));
     }
 
     rotateLeft() {
@@ -22,64 +22,64 @@ class TetrixPiece {
     };
     
     getBlockXCoord(index) {
-         return this.blocks[index][0];
+         return this.blocks[index].x;
     };
   
     getBlockYCoord(index) {
-        return this.blocks[index][1];
+        return this.blocks[index].y;
     };
 
     getMinX() {
-        let tmp = this.blocks[0][0];
+        let n = this.blocks[0].x;
         for(let i = 1 ; i < 4 ; i++) {
-            if(tmp > this.blocks[i][0]) {
-                tmp = this.blocks[i][0];
+            if(n > this.blocks[i].x) {
+                n = this.blocks[i].x;
             }
         }
-        return tmp;
+        return n;
     };
 
     getMaxX() {
-        let tmp = this.blocks[0][0];
+        let n = this.blocks[0].x;
         for(let i = 1 ; i < 4 ; i++) {
-            if(tmp < this.blocks[i][0]) {
-                tmp = this.blocks[i][0];
+            if(n < this.blocks[i].x) {
+                n = this.blocks[i].x;
             }
         }
-        return tmp;
+        return n;
     };
 
     getMinY() {
-        let tmp = this.blocks[0][1];
+        let n = this.blocks[0].y;
         for(let i = 1; i < 4; i++) {
-            if(tmp > this.blocks[i][1]) {
-                tmp = this.blocks[i][1];
+            if(n > this.blocks[i].y) {
+                n = this.blocks[i].y;
             }
         }
-        return tmp;
+        return n;
     };
 
     getMaxY() {
-        let tmp = this.blocks[0][1];
+        let n = this.blocks[0].y;
         for(let i = 1; i < 4; i++) {
-            if (tmp < this.blocks[i][1]) {
-                tmp = this.blocks[i][1];
+            if (n < this.blocks[i].y) {
+                n = this.blocks[i].y;
             }
         }
-        return tmp;
+        return n;
     };
 
     setBlockXCoord(index, value) {
-        this.blocks[index][0] = value;
+        this.blocks[index].x = value;
     };
 
     setBlockYCoord(index, value) {
-        this.blocks[index][1] = value;
+        this.blocks[index].y = value;
     };
 
     setBlockCoord(index, x, y) {
-        this.blocks[index][0] = x;
-        this.blocks[index][1] = y;
+        this.blocks[index].x = x;
+        this.blocks[index].y = y;
     };
 }
 
@@ -91,15 +91,19 @@ TetrixPiece.O = 4;
 TetrixPiece.T = 5;
 TetrixPiece.L = 6;
 
+function block(x, y) {
+    return {x, y};
+}
+
 // seven types of pieces
 const BLOCKS = [
-    [[ 0,-1], [ 0, 0], [-1, 0], [-1, 1]],
-    [[ 0,-1], [ 0, 0], [ 1, 0], [ 1, 1]], 
-    [[ 0,-1], [ 0, 0], [ 0, 1], [ 0, 2]], 
-    [[-1, 0], [ 0, 0], [ 1, 0], [ 0, 1]],
-    [[ 0, 0], [ 1, 0], [ 0, 1], [ 1, 1]],
-    [[-1,-1], [ 0,-1], [ 0, 0], [ 0, 1]],
-    [[ 1,-1], [ 0,-1], [ 0, 0], [ 0, 1]]
+    [block( 0, -1), block(0,  0), block(-1, 0), block(-1, 1)],
+    [block( 0, -1), block(0,  0), block( 1, 0), block( 1, 1)], 
+    [block( 0, -1), block(0,  0), block( 0, 1), block( 0, 2)], 
+    [block(-1,  0), block(0,  0), block( 1, 0), block( 0, 1)],
+    [block( 0,  0), block(1,  0), block( 0, 1), block( 1, 1)],
+    [block(-1, -1), block(0, -1), block( 0, 0), block( 0, 1)],
+    [block( 1, -1), block(0, -1), block( 0, 0), block( 0, 1)]
 ];
                             
 
