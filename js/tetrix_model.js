@@ -111,209 +111,217 @@ function randomFreezePiece() {
     return pieces[index];
 }
 
-function TetrixGround(xblocks = 10, yblocks = 20) { 
-    let ground = Array(xblocks)
-                   .fill()
-                   .map(_ => Array(yblocks).fill(0));
-        
-    let xOffset = parseInt(xblocks / 2) - 1;
-    let yOffset = 1;
-    
-    let emptyLines = 0;
-    let removedLines = 0;
-    let score = 0;
-    
-    let isGameover = false;
-    let isOperable = true;
+class TetrixGround { 
+    constructor(xblocks = 10, yblocks = 20) {
+        this.xblocks = xblocks;
+        this.yblocks = yblocks;
 
-    let tetrixPiece;
-    let testPiece;
+        this.ground = Array(xblocks)
+                    .fill()
+                    .map(_ => Array(yblocks).fill(0));
+            
+        this.xOffset = parseInt(xblocks / 2) - 1;
+        this.yOffset = 1;
+        
+        this.emptyLines = 0;
+        this.removedLines = 0;
+        this.score = 0;
+        
+        this.isGameover = false;
+        this.isOperable = true;
 
-    this.isMovable = function(xStep, yStep) {
-        return tetrixPiece.blocks.every(block => {
-            let x = block.x + xOffset + xStep;
-            let y = block.y + yOffset + yStep;
-            return x >= 0 && x < xblocks && y < yblocks && ground[x][y] == 0;
+        this.tetrixPiece;
+        this.testPiece;
+    }
+
+    isMovable(xStep, yStep) {
+        return this.tetrixPiece.blocks.every(block => {
+            let x = block.x + this.xOffset + xStep;
+            let y = block.y + this.yOffset + yStep;
+            return x >= 0 && x < this.xblocks && y < this.yblocks && this.ground[x][y] == 0;
         });
-    };
+    }
     
-    this.addPieceOfType = function(pieceType) {
-        tetrixPiece = new TetrixPiece(pieceType);
-        testPiece = new TetrixPiece(pieceType);    
-        xOffset = xblocks / 2 - 1;
-        yOffset = tetrixPiece.minimumY < 0 ? Math.abs(tetrixPiece.minimumY) : 0;
-        isGameover = tetrixPiece.blocks.some(block => {
-            let x = block.x + xOffset;
-            let y = block.y + yOffset;
-            return ground[x][y] != 0;
+    addPieceOfType(pieceType) {
+        this.tetrixPiece = new TetrixPiece(pieceType);
+        this.testPiece = new TetrixPiece(pieceType);    
+        this.xOffset = this.xblocks / 2 - 1;
+        this.yOffset = this.tetrixPiece.minimumY < 0 ? Math.abs(this.tetrixPiece.minimumY) : 0;
+        this.isGameover = this.tetrixPiece.blocks.some(block => {
+            let x = block.x + this.xOffset;
+            let y = block.y + this.yOffset;
+            return this.ground[x][y] != 0;
         });
-    };
+    }
     
-    this.reset = function() {
-        emptyLines = 0;
-        score = 0;
-        removedLines = 0;
-        isGameover = false; 
-        isOperable = true;
+    reset() {
+        this.emptyLines = 0;
+        this.score = 0;
+        this.removedLines = 0;
+        this.isGameover = false; 
+        this.isOperable = true;
         
-        xOffset = parseInt(xblocks / 2) - 1;
-        yOffset = tetrixPiece.maximumY < 0 ? Math.abs(tetrixPiece.minimumY) : 0;
+        this.xOffset = parseInt(this.xblocks / 2) - 1;
+        this.yOffset = this.tetrixPiece.maximumY < 0 ? Math.abs(this.tetrixPiece.minimumY) : 0;
         
-        ground = Array(xblocks)
+        this.ground = Array(this.xblocks)
                    .fill()
-                   .map(_ => Array(yblocks).fill(0));
-    };
+                   .map(_ => Array(this.yblocks).fill(0));
+    }
     
-    this.moveTetrixLeft = function() {
+    moveTetrixLeft() {
         if(this.isMovable(-1, 0)) {
-            xOffset--;
+            this.xOffset--;
         }
     };
 
-    this.moveTetrixRight = function() {
+    moveTetrixRight() {
         if(this.isMovable(1, 0)) {
-            xOffset++;
+            this.xOffset++;
         }
     };
 
-    this.moveTetrixDown = function() {
-        if(this.isMovable(0, 1) && isOperable) { 
-            yOffset++; 
+   moveTetrixDown() {
+        if(this.isMovable(0, 1) && this.isOperable) { 
+            this.yOffset++; 
         }
     };
 
-    this.dropTetrix = function() {
-        while(this.isMovable(0, 1) && isOperable) {
-            yOffset++;
+    dropTetrix() {
+        while(this.isMovable(0, 1) && this.isOperable) {
+            this.yOffset++;
         }
     };
 
-    this.rotateTetrix = function(clockwise) {
-        testPiece.blocks.forEach((block, i) => {
-            block.x = tetrixPiece.blocks[i].x;
-            block.y = tetrixPiece.blocks[i].y;
+    rotateTetrix(clockwise) {
+        this.testPiece.blocks.forEach((block, i) => {
+            block.x = this.tetrixPiece.blocks[i].x;
+            block.y = this.tetrixPiece.blocks[i].y;
         });
 
         if(clockwise) {
-            testPiece.rotateRight();
+            this.testPiece.rotateRight();
         }
         else {
-            testPiece.rotateLeft();
+            this.testPiece.rotateLeft();
         }
 
-        let rotatable = testPiece.blocks.every(block => {
-            let x = block.x + xOffset;
-            let y = block.y + yOffset;
-            return x >= 0 && x < xblocks && y < yblocks && y >= 0 && ground[x][y] == 0;
+        let rotatable = this.testPiece.blocks.every(block => {
+            let x = block.x + this.xOffset;
+            let y = block.y + this.yOffset;
+            return x >= 0 && x < this.xblocks && y < this.yblocks && y >= 0 && this.ground[x][y] == 0;
         });
        
         if(rotatable) {
-            tetrixPiece.blocks.forEach((block, i) => {
-                block.x = testPiece.blocks[i].x;
-                block.y = testPiece.blocks[i].y;
+            this.tetrixPiece.blocks.forEach((block, i) => {
+                block.x = this.testPiece.blocks[i].x;
+                block.y = this.testPiece.blocks[i].y;
             });
         }
     };
     
-    this.updateGround = function() {
-        isOperable = false;
+    updateGround() {
+        let self = this;
+        function isFullLine(j) {
+            for(let i = 0; i < self.xblocks; i++) {
+                if(self.ground[i][j] == 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function cleanLine(j) {
+            // move lines down
+            for(let k = j; k > self.emptyLines; k--) {
+                for(let i = 0; i < self.xblocks; i++) {
+                    if(self.ground[i][k] != self.ground[i][k-1]) {
+                        self.ground[i][k] = self.ground[i][k-1];
+                    }
+                }
+            }
+            
+            // clean top line
+            for(let i = 0; i < self.xblocks; i++) {
+                self.ground[i][self.emptyLines] = 0;
+            }        
+        }
+
+        function removeFullLines() {
+            let count = 0;
+            for(let j = self.yblocks - 1; j > self.emptyLines; j--) {
+                if(isFullLine(j)) {
+                    cleanLine(j);
+                    self.emptyLines++;
+                    self.removedLines++;
+                    count++;
+                    j++;
+                }
+            }
+            
+            self.score = self.score + parseInt(Math.pow(2, count));
+        }
+                
+        this.isOperable = false;
         
-        if(!isGameover && !this.isMovable(0, 1)) {
+        if(!this.isGameover && !this.isMovable(0, 1)) {
             // touch the bottom of playground or the top of one piece 
-            tetrixPiece.blocks.forEach(block => {
-                let x = block.x + xOffset;
-                let y = block.y + yOffset;
-                ground[x][y] = tetrixPiece.type + 1;
+            this.tetrixPiece.blocks.forEach(block => {
+                let x = block.x + this.xOffset;
+                let y = block.y + this.yOffset;
+                this.ground[x][y] = this.tetrixPiece.type + 1;
             });
             
-            let pieceTop = tetrixPiece.minimumY + yOffset;
-            if(pieceTop < emptyLines) {
+            let pieceTop = this.tetrixPiece.minimumY + this.yOffset;
+            if(pieceTop < this.emptyLines) {
                 emptyLines = pieceTop;
             }
         
             removeFullLines();
         }
         
-        isOperable = true;
+        this.isOperable = true;
     };
     
-    function isFullLine(j) {
-        for(let i = 0; i < xblocks; i++) {
-            if(ground[i][j] == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
 
-    function cleanLine(j) {
-        // move lines down
-        for(let k = j; k > emptyLines; k--) {
-            for(let i = 0; i < xblocks; i++) {
-                if(ground[i][k] != ground[i][k-1]) {
-                    ground[i][k] = ground[i][k-1];
-                }
-            }
-        }
-        
-        // clean top line
-        for(let i = 0; i < xblocks; i++) {
-            ground[i][emptyLines] = 0;
-        }        
-    }
-
-    function removeFullLines() {
-        let count = 0;
-        for(let j = yblocks - 1; j > emptyLines; j--) {
-            if(isFullLine(j)) {
-                cleanLine(j);
-                emptyLines++;
-                removedLines++;
-                count++;
-                j++;
-            }
-        }
-        
-        score = score + parseInt(Math.pow(2, count));
-    };
     
-    this.getGroundHeightInBlk = function() {
-        return yblocks;
-    };
+    // getGroundHeightInBlk = function() {
+    //     return yblocks;
+    // };
     
-    this.getGroundWidthInBlk = function() {
-        return xblocks;
-    };
+    // this.getGroundWidthInBlk = function() {
+    //     return xblocks;
+    // };
     
-    this.getTetrixPiece = function() {
-        return tetrixPiece;
-    };
+    // this.getTetrixPiece = function() {
+    //     return tetrixPiece;
+    // };
     
-    this.setTetrixPiece = function(tetrixPiece) {
-        tetrixPiece = tetrixPiece;
-    };
+    // this.setTetrixPiece = function(tetrixPiece) {
+    //     tetrixPiece = tetrixPiece;
+    // };
     
-    this.getGroundInfo = function() {
-        return ground;
-    };
+    // this.getGroundInfo = function() {
+    //     return ground;
+    // };
     
-    this.isGameover = function() {
-        return isGameover;
-    };
+    // this.isGameover = function() {
+    //     return isGameover;
+    // };
     
-    this.getScore = function() {
-        return score;
-    };
+    // this.getScore = function() {
+    //     return score;
+    // };
     
-    this.getRemovedLines = function() {
-        return removedLines;
-    };
+    // this.getRemovedLines = function() {
+    //     return removedLines;
+    // };
     
-    this.getXOffset = function() {
-        return xOffset;
-    };
+    // this.getXOffset = function() {
+    //     return xOffset;
+    // };
     
-    this.getYOffset = function() {
-        return yOffset;
-    };
+    // this.getYOffset = function() {
+    //     return yOffset;
+    // };
 }

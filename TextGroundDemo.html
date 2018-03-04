@@ -46,7 +46,7 @@
                     piece = randomFreezePiece();
                 }
                 
-                if(!tetrixGround.isGameover()) {
+                if(!tetrixGround.isGameover) {
                     setTimeout(arguments.callee, 100);
                 } else {
                     stackArea.paint(context);

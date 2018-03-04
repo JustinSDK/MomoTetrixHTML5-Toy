@@ -65,13 +65,13 @@
                                     tetrixGround.addPieceOfType(piece.type);
                                     piece = randomFreezePiece();
                                     tetrixBox.paint(piece);
-                                    lineLabel.innerHTML = tetrixGround.getRemovedLines();
-                                    scoreLabel.innerHTML = tetrixGround.getScore();
+                                    lineLabel.innerHTML = tetrixGround.removedLines;
+                                    scoreLabel.innerHTML = tetrixGround.score;
                                 }
                                 
                                 stackArea.paint(stackareaContext);
                                 
-                                if((tetrixGround.getScore() / 50) > (level - 1)) {
+                                if((tetrixGround.score / 50) > (level - 1)) {
                                     level++;
                                     if(speed > 200) {
                                         speed -= 100;
@@ -79,7 +79,7 @@
                                     levelLabel.innerHTML = level;
                                 }
                             
-                                if(!tetrixGround.isGameover() && !isRestart) {
+                                if(!tetrixGround.isGameover && !isRestart) {
                                     setTimeout(down, speed);
                                 }
                             }
@@ -89,8 +89,8 @@
                         speed = 1000;
                         tetrixGround.reset();
                         levelLabel.innerHTML = level;
-                        lineLabel.innerHTML = tetrixGround.getRemovedLines();
-                        scoreLabel.innerHTML = tetrixGround.getScore();
+                        lineLabel.innerHTML = tetrixGround.removedLines;
+                        scoreLabel.innerHTML = tetrixGround.score;
                         
                         isRestart = false;                        
                         down();
@@ -105,7 +105,7 @@
                 };
                 
                 document.onkeydown = function(event) {
-                    if(isRestart || tetrixGround.isGameover() || isPause) {
+                    if(isRestart || tetrixGround.isGameover || isPause) {
                         return;
                     }
                     
