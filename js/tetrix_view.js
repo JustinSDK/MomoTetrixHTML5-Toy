@@ -46,14 +46,14 @@ class TetrixStackArea {
     
     paint(tetrixGround) {
         let blockWidth = this.width / tetrixGround.xblocks;
-        let context = canvas.getContext('2d');
+        let context = this.canvas.getContext('2d');
         // clean previous screen
         context.fillStyle = this.backgroundColor;
         context.fillRect(0, 0, this.width, this.height);
 
         // draw current piece
         tetrixGround.tetrixPiece.blocks.forEach(block => {
-             drawBlock(context, images[tetrixGround.tetrixPiece.type],
+             drawBlock(context, this.images[tetrixGround.tetrixPiece.type],
                     block.x + tetrixGround.xOffset,
                     block.y + tetrixGround.yOffset,
                     blockWidth, this.border);
@@ -63,7 +63,7 @@ class TetrixStackArea {
         for(var i = 0; i < tetrixGround.xblocks; i++) {
             for(var j = 0; j < tetrixGround.yblocks; j++) {
                 if(tetrixGround.ground[i][j] != 0) {
-                    drawBlock(context, images[tetrixGround.ground[i][j] - 1], i, j,
+                    drawBlock(context, this.images[tetrixGround.ground[i][j] - 1], i, j,
                         blockWidth, this.border);
                 }
             }

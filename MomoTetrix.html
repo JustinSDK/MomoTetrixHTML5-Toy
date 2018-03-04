@@ -7,6 +7,11 @@
     <script type="text/javascript" src="js/tetrix_view.js"></script>
     <script type="text/javascript">
             window.onload = function() {
+                const blockWidth = 25;
+                const boxWidth = 100;
+                const groundBlocksX = 10;
+                const groundBlocksY = 20;
+
                 var isRestart = true;
                 var isPause = false;
                 var level = 1;
@@ -27,25 +32,24 @@
                 document.body.appendChild(logoIcon);
 
                 var tetrixboxCanvas = document.getElementById('tetrixbox');
-                tetrixboxCanvas.width = 100;
-                tetrixboxCanvas.height = 100;
+                tetrixboxCanvas.width = boxWidth;
+                tetrixboxCanvas.height = boxWidth;
                 var tetrixboxContext = tetrixboxCanvas.getContext('2d');
                     
 
                 var tetrixBox = new TetrixBox(images, tetrixboxCanvas);
-                let piece = randomFreezePiece();
+                let piece = TetrixPiece.randomFreezePiece();
                 tetrixBox.paint(piece);    
         
                 var tetrixGround = new TetrixGround(10, 20);
                 tetrixGround.addPieceOfType(piece.type);
         
-                var stackArea = new TetrixStackArea(images, 25, tetrixGround);
-                
                 var stackareaCanvas = document.getElementById('stackarea');
-                stackareaCanvas.width = stackArea.width;
-                stackareaCanvas.height = stackArea.height;
-                var stackareaContext = stackareaCanvas.getContext('2d');
-                stackArea.paint(stackareaContext);
+                stackareaCanvas.width = groundBlocksX * blockWidth;
+                stackareaCanvas.height = groundBlocksY * blockWidth;        
+                var stackArea = new TetrixStackArea(images, stackareaCanvas);
+                
+                stackArea.paint(tetrixGround);
                 
                 var levelLabel = document.getElementById('level');
                 var lineLabel = document.getElementById('line');
@@ -63,13 +67,13 @@
                                
                                 if(!tetrixGround.isMovable(0, 1)) { 
                                     tetrixGround.addPieceOfType(piece.type);
-                                    piece = randomFreezePiece();
+                                    piece = TetrixPiece.randomFreezePiece();
                                     tetrixBox.paint(piece);
                                     lineLabel.innerHTML = tetrixGround.removedLines;
                                     scoreLabel.innerHTML = tetrixGround.score;
                                 }
                                 
-                                stackArea.paint(stackareaContext);
+                                stackArea.paint(tetrixGround);
                                 
                                 if((tetrixGround.score / 50) > (level - 1)) {
                                     level++;
@@ -100,7 +104,7 @@
                 document.getElementById('pause').onclick = function() {
                     this.blur();
                     isPause = true;
-                    alert('           Paused - http://openhome.cc');
+                    alert('           Paused - https://openhome.cc');
                     isPause = false;
                 };
                 
@@ -126,7 +130,7 @@
                             tetrixGround.dropTetrix();
                             break;
                     }
-                    stackArea.paint(stackareaContext);
+                    stackArea.paint(tetrixGround);
                 };
             
             };
