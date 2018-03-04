@@ -1,7 +1,19 @@
 function rgb(r, g, b) {
     return `rgb(${r}, ${g}, ${b})`;
 }
- 
+
+
+function drawBlock(context, image, x, y, blockWidth, border) {
+    context.drawImage(image, x * blockWidth, y * blockWidth, blockWidth, blockWidth);
+    if(border) {
+        context.beginPath();
+        context.strokeStyle = rgb(150, 150, 150);
+        context.rect(x * blockWidth, y * blockWidth, blockWidth, blockWidth);
+        context.stroke();
+    }
+}  
+
+
 class TetrixBox {
     constructor(images, canvas) {
         this.images = images;
@@ -24,16 +36,6 @@ class TetrixBox {
         });
     }
 }
-
-function drawBlock(context, image, x, y, blockWidth, border) {
-    context.drawImage(image, x * blockWidth, y * blockWidth, blockWidth, blockWidth);
-    if(border) {
-        context.beginPath();
-        context.strokeStyle = rgb(150, 150, 150);
-        context.rect(x * blockWidth, y * blockWidth, blockWidth, blockWidth);
-        context.stroke();
-    }
-}  
 
 function TetrixStackArea(images, canvas) {
     this.backgroundColor = rgb(255, 255, 255);
