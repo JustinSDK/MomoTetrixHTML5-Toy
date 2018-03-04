@@ -44,30 +44,6 @@ function TetrixStackArea(images, blockWidth, tetrixGround) {
     this.width = tetrixGround.xblocks * blockWidth;
     this.height = tetrixGround.yblocks * blockWidth;       
     this.isBlockBorder = false;
-    
-    // this.setBackgroundColor = function(color) {
-    //     backgroundColor = color;
-    // };
-    
-    // this.getBackgroundColor = function() {
-    //     return backgroundColor;
-    // };
-    
-    // this.setBlockBorder = function(flag) {
-    //     isBlockBorder = flag;
-    // };
-    
-    // this.isBlockBorder = function() {
-    //     return isBlockBorder;
-    // };
-    
-    // this.getWidth = function() {
-    //     return width;
-    // };
-    
-    // this.getHeight = function() {
-    //     return height;
-    // };
         
     function drawBlock(context, image, x, y) {
         context.drawImage(image, x * blockWidth, y * blockWidth, blockWidth, blockWidth);
