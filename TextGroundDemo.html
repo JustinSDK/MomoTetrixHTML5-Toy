@@ -32,13 +32,11 @@
             var tetrixGround = new TetrixGround(groundBlocksX, groundBlocksY);
             tetrixGround.addPieceOfType(piece.type);
 
-            var canvas1 = document.getElementById('canvas');
-            canvas1.width = groundBlocksX * blockWidth;
-            canvas1.height = groundBlocksY * blockWidth;
-            
-            var stackArea = new TetrixStackArea(images, blockWidth, tetrixGround);
-            
-            var context = canvas1.getContext('2d');
+            canvas = document.getElementById('canvas');
+            canvas.width = groundBlocksX * blockWidth;
+            canvas.height = groundBlocksY * blockWidth;
+
+            var stackArea = new TetrixStackArea(images, canvas, tetrixGround);
             
             setTimeout(function() {
                 if(tetrixGround.isMovable(0, 1)) {
@@ -46,7 +44,6 @@
                     tetrixGround.moveTetrixDown();
                     tetrixGround.rotateTetrix(true);
                     tetrixGround.updateGround();
-                    stackArea.paint(context);
                 }
                 else {
                     tetrixGround.addPieceOfType(piece.type);
@@ -55,9 +52,9 @@
                 
                 if(!tetrixGround.isGameover) {
                     setTimeout(arguments.callee, 100);
-                } else {
-                    stackArea.paint(context);
                 }
+
+                stackArea.paint();
             }, 100);
 
         </script>        

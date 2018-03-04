@@ -39,11 +39,13 @@ class TetrixBox {
     }    
 }
 
-function TetrixStackArea(images, blockWidth, tetrixGround) {
+function TetrixStackArea(images, canvas, tetrixGround) {
+    let blockWidth = canvas.width / tetrixGround.xblocks;
     this.backgroundColor = rgb(255, 255, 255);
-    this.width = tetrixGround.xblocks * blockWidth;
-    this.height = tetrixGround.yblocks * blockWidth;       
+    this.width = canvas.width;
+    this.height = canvas.height;       
     this.isBlockBorder = false;
+    this.context = canvas.getContext('2d');
         
     function drawBlock(context, image, x, y) {
         context.drawImage(image, x * blockWidth, y * blockWidth, blockWidth, blockWidth);
@@ -56,14 +58,14 @@ function TetrixStackArea(images, blockWidth, tetrixGround) {
         }
     }
     
-    this.paint = function(context) {
+    this.paint = function() {
         // clean previous screen
-        context.fillStyle = this.backgroundColor;
-        context.fillRect(0, 0, this.width, this.height);
+        this.context.fillStyle = this.backgroundColor;
+        this.context.fillRect(0, 0, this.width, this.height);
 
         // draw current piece
         for(var i = 0; i < 4; i++) {
-            drawBlock(context, images[tetrixGround.tetrixPiece.type],
+            drawBlock(this.context, images[tetrixGround.tetrixPiece.type],
                     tetrixGround.tetrixPiece.xOfBlock(i) + tetrixGround.xOffset,
                     tetrixGround.tetrixPiece.yOfBlock(i) + tetrixGround.yOffset);
         }
@@ -74,19 +76,19 @@ function TetrixStackArea(images, blockWidth, tetrixGround) {
                 if(tetrixGround.ground[i][j] == 0) {
                     continue;
                 }
-                drawBlock(context, images[tetrixGround.ground[i][j] - 1], i, j);
+                drawBlock(this.context, images[tetrixGround.ground[i][j] - 1], i, j);
             }
         }
 
         if(tetrixGround.isGameover) {
-            context.save();
-            context.shadowOffsetX = 1;
-            context.shadowOffsetY = 1;
-            context.shadowColor = 'black';
-            context.font = blockWidth + 'px "Arial Black"';
-            context.fillStyle = 'red';
-            context.fillText('Game over', this.width / 5, this.height / 2);
-            context.restore();
+            this.context.save();
+            this.context.shadowOffsetX = 1;
+            this.context.shadowOffsetY = 1;
+            this.context.shadowColor = 'black';
+            this.context.font = blockWidth + 'px "Arial Black"';
+            this.context.fillStyle = 'red';
+            this.context.fillText('Game over', this.width / 5, this.height / 2);
+            this.context.restore();
         }
     };
 }
