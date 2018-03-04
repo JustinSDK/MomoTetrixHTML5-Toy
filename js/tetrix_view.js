@@ -14,28 +14,26 @@ class TetrixBox {
         return this.canvas.width;
     }
 
-    get height() {
-        return this.canvas.height;
+    get blockWidth() {
+        return this.canvas.width / 4;
     }
 
     paint(piece) {
-        // draw box background
         let context = this.canvas.getContext('2d');
         context.fillStyle = this.backgroundColor;
-        context.fillRect(0, 0, this.width, this.height);
+        context.fillRect(0, 0, this.width, this.width);
         piece.blocks.forEach(b => {
             this.drawBlock(context, piece, b.x + 1, b.y + 1);
         });
     }
     
     drawBlock(context, piece, x, y) {
-        let bw = this.width / 4;
-        let bh = this.height / 4;
-        context.drawImage(this.images[piece.type], x * bw, y * bh, bw, bh);
+        let bw = this.blockWidth;
+        context.drawImage(this.images[piece.type], x * bw, y * bw, bw, bw);
         if(this.border) {
             context.beginPath();
             context.strokeStyle = rgb(150, 150, 150);
-            context.rect(x * bw, y * bh, bw, bh);
+            context.rect(x * bw, y * bw, bw, bw);
             context.stroke();
         }
     }    
@@ -281,8 +279,8 @@ function TetrixGround(groundWidthInBlk, groundHeightInBlk) {
 
 function TetrixStackArea(tetrixBox, tetrixGround) {
     var backgroundColor = rgb(255, 255, 255);
-    var width = tetrixGround.getGroundWidthInBlk() * tetrixBox.width / 4;
-    var height = tetrixGround.getGroundHeightInBlk() * tetrixBox.height / 4;
+    var width = tetrixGround.getGroundWidthInBlk() * tetrixBox.blockWidth;
+    var height = tetrixGround.getGroundHeightInBlk() * tetrixBox.blockWidth;
                 
     var isBlockBorder = false;
     
@@ -311,14 +309,13 @@ function TetrixStackArea(tetrixBox, tetrixGround) {
     };
         
     function drawBlock(context, image, x, y) {
-        let bw = tetrixBox.width / 4;
-        let bh = tetrixBox.height / 4;
-        context.drawImage(image, x * bw, y * bh, bw, bh);
+        let bw = tetrixBox.blockWidth;
+        context.drawImage(image, x * bw, y * bw, bw, bw);
         
         if(isBlockBorder) {
             context.beginPath();
             context.strokeStyle = 'rgb(150, 150, 150)';
-            context.drawRect(x * bw, y * bh, bw, bh);
+            context.drawRect(x * bw, y * bw, bw, bw);
             context.stroke();
         }
     }
