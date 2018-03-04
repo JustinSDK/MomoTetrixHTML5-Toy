@@ -35,7 +35,7 @@ class TetrixPiece {
             block.x = x;
             block.y = y;
         });
-    };
+    }
 
     rotateClockwise() {
         this.blocks.forEach(block => {
@@ -44,35 +44,35 @@ class TetrixPiece {
             block.x = x;
             block.y = y;
         });
-    };
+    }
 
     xOfBlock(i) {
         return this.blocks[i].x;
-    };
+    }
 
     yOfBlock(i) {
         return this.blocks[i].y;
-    };
+    }
 
     get minimumX() {
         return this.blocks.map(b => b.x)
             .reduce((acc, x) => acc > x ? x : acc);
-    };
+    }
 
     get maximumX() {
         return this.blocks.map(b => b.x)
             .reduce((acc, x) => acc < x ? x : acc);
-    };
+    }
 
     get minimumY() {
         return this.blocks.map(b => b.y)
             .reduce((acc, y) => acc > y ? y : acc);
-    };
+    }
 
     get maximumY() {
         return this.blocks.map(b => b.y)
             .reduce((acc, y) => acc < y ? y : acc);
-    };
+    }
 }
 
 TetrixPiece.TYPE = Object.freeze({
@@ -172,25 +172,25 @@ class TetrixGround {
         if (this.isMovable(-1, 0)) {
             this.xOffset--;
         }
-    };
+    }
 
     moveTetrixRight() {
         if (this.isMovable(1, 0)) {
             this.xOffset++;
         }
-    };
+    }
 
     moveTetrixDown() {
         if (this.isMovable(0, 1) && this.isOperable) {
             this.yOffset++;
         }
-    };
+    }
 
     dropTetrix() {
         while (this.isMovable(0, 1) && this.isOperable) {
             this.yOffset++;
         }
-    };
+    }
 
     rotateTetrix(clockwise) {
         this.testPiece.blocks.forEach((block, i) => {
@@ -219,7 +219,7 @@ class TetrixGround {
                 this.tetrixPiece.rotateCountClockwise();
             }
         }
-    };
+    }
 
     updateGround() {
         this.isOperable = false;
@@ -241,7 +241,7 @@ class TetrixGround {
         }
 
         this.isOperable = true;
-    };
+    }
 }
 
 function isFullLine(tground, j) {
