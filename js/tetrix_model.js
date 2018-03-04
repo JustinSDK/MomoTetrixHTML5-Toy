@@ -143,23 +143,13 @@ function TetrixGround(xblocks = 10, yblocks = 20) {
     this.addPieceOfType = function(pieceType) {
         tetrixPiece = new TetrixPiece(pieceType);
         testPiece = new TetrixPiece(pieceType);    
-        
         xOffset = xblocks / 2 - 1;
-        if(tetrixPiece.minimumY < 0) {
-            yOffset = Math.abs(tetrixPiece.minimumY);
-        }
-        else {
-            yOffset = 0;
-        }
-        
-        for(var i = 0; i < 4; i++) {
-            var x = tetrixPiece.xOfBlock(i) + xOffset;
-            var y = tetrixPiece.yOfBlock(i) + yOffset;
-
-            if(ground[x][y] != 0) {
-                isGameover = true;
-            }
-        }
+        yOffset = tetrixPiece.minimumY < 0 ? Math.abs(tetrixPiece.minimumY) : 0;
+        isGameover = !tetrixPiece.blocks.every(block => {
+            let x = block.x + xOffset;
+            let y = block.y + yOffset;
+            return ground[x][y] == 0;
+        });
     };
     
     this.reset = function() {
