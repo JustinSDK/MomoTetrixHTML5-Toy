@@ -23,19 +23,19 @@
             let canvas = document.createElement('canvas');
             canvas.width = boxWidth;
             canvas.height = boxWidth;        
-            var tetrixBox = new TetrixBox(images, canvas);
+            let tetrixBox = new TetrixBox(images, canvas);
             tetrixBox.backgroundColor = rgb(0, 0, 0);
     
             let piece = TetrixPiece.randomFreezePiece();
 
-            var tetrixGround = new TetrixGround(groundBlocksX, groundBlocksY);
+            let tetrixGround = new TetrixGround(groundBlocksX, groundBlocksY);
             tetrixGround.addPieceOfType(piece.type);
 
             canvas = document.getElementById('canvas');
             canvas.width = groundBlocksX * blockWidth;
             canvas.height = groundBlocksY * blockWidth;
 
-            var stackArea = new TetrixStackArea(images, canvas);
+            let stackArea = new TetrixStackArea(images, canvas);
             
             setTimeout(function() {
                 if(tetrixGround.isMovable(0, 1)) {
