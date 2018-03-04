@@ -29,19 +29,21 @@ class TetrixPiece {
     }
 
     rotateLeft() {
-        for(let i = 0; i < 4; i++) {
-            let x = this.getBlockYCoord(i);
-            let y = -this.getBlockXCoord(i);  
-            this.setBlockCoord(i, x, y);
-        }
+        this.blocks.forEach(block => {
+            let x = block.y;
+            let y = -block.x;  
+            block.x = x;
+            block.y = y;
+        });
     };
 
     rotateRight() {
-        for(let i = 0; i < 4; i++) {
-            let x = -this.getBlockYCoord(i);
-            let y = this.getBlockXCoord(i);
-            this.setBlockCoord(i, x, y);
-        }
+        this.blocks.forEach(block => {
+            let x = -block.y;
+            let y = block.x;  
+            block.x = x;
+            block.y = y;
+        });        
     };
     
     xOfBlock(i) {
