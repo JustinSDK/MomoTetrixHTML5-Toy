@@ -133,20 +133,11 @@ function TetrixGround(xblocks = 10, yblocks = 20) {
     let testPiece;
 
     this.isMovable = function(xStep, yStep) {
-        for(var i = 0; i < 4; i++) {
-            var x = tetrixPiece.xOfBlock(i) + xOffset + xStep;
-            var y = tetrixPiece.yOfBlock(i) + yOffset + yStep;
-
-            if(x < 0 || x >= xblocks || y >= yblocks) {
-                return false;
-            }
-
-            if(ground[x][y] != 0) {
-                return false;
-            }
-        }
-
-        return true;
+        return tetrixPiece.blocks.every(block => {
+            let x = block.x + xOffset + xStep;
+            let y = block.y + yOffset + yStep;
+            return x >= 0 && x < xblocks && y < yblocks && ground[x][y] == 0;
+        });
     };
     
     this.addPieceOfType = function(pieceType) {
