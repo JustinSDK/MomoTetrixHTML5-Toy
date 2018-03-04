@@ -1,7 +1,6 @@
 class TetrixPiece {
     constructor(type) {
-        this.blocks = TetrixPiece.blocks[type]
-                                 .reduce((acc, block) => acc.concat([block.concat()]), []);
+        this.blocks = BLOCKS[type].reduce((acc, block) => acc.concat([block.concat()]), []);
     }
 
     rotateLeft() {
@@ -91,7 +90,7 @@ TetrixPiece.T = 5;
 TetrixPiece.L = 6;
 
 // seven types of pieces
-TetrixPiece.blocks = [
+const BLOCKS = [
     [[ 0,-1], [ 0, 0], [-1, 0], [-1, 1]],
     [[ 0,-1], [ 0, 0], [ 1, 0], [ 1, 1]], 
     [[ 0,-1], [ 0, 0], [ 0, 1], [ 0, 2]], 
