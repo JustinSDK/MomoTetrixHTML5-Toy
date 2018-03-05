@@ -12,7 +12,7 @@
             const GROUND_BLOCKS_Y = 20;
             const INIT_GAME_SPEED = 1000;
             
-            function process_images() {
+            function prepare_images() {
                 let logoIcon = new Image();
                 logoIcon.src = 'images/logo.jpg';
                 document.body.appendChild(logoIcon);
@@ -25,93 +25,92 @@
                 return images;
             }
 
-            window.onload = function() {        
-                let images = process_images();
-                
-                // Prepare TetrixBox
+            function prepare_tetrixBox(images) {
                 let tetrixboxCanvas = document.getElementById('tetrixbox');
                 tetrixboxCanvas.width = BOK_WIDTH;
                 tetrixboxCanvas.height = BOK_WIDTH;
                 let tetrixBox = new TetrixBox(images, tetrixboxCanvas);
-                let piece = TetrixPiece.randomFreezePiece();
-                tetrixBox.paint(piece);    
-        
-                // Prepare TetrixGround
-                let tetrixGround = new TetrixGround(10, 20);
-                tetrixGround.addPieceOfType(piece.type);
-                
-                // Prepare TetrixStackArea
+                return tetrixBox;                
+            }
+
+            function prepare_tetrixStackArea(images) {
                 let stackareaCanvas = document.getElementById('stackarea');
                 stackareaCanvas.width = GROUND_BLOCKS_X * BLOCK_WIDTH;
                 stackareaCanvas.height = GROUND_BLOCKS_Y * BLOCK_WIDTH;        
                 let stackArea = new TetrixStackArea(images, stackareaCanvas);
+                return stackArea;
+            } 
+
+            window.onload = function() {        
+                let images = prepare_images();
+                let tetrixBox = prepare_tetrixBox(images);  
+                let stackArea = prepare_tetrixStackArea(images);
+
+                let nextPiece = TetrixPiece.randomFreezePiece();
+                tetrixBox.paint(nextPiece); 
+
+                let tetrixGround = new TetrixGround(10, 20);
+                tetrixGround.copyPiece(TetrixPiece.randomFreezePiece());
                 stackArea.paint(tetrixGround);
-                
+
                 // GAME
                 let levelLabel = document.getElementById('level');
                 let lineLabel = document.getElementById('line');
                 let scoreLabel = document.getElementById('score');
 
-                let isRestart = true;
-                let isPause = false;
-                let level = 1;
-                let speed = INIT_GAME_SPEED;
-                                
-                document.getElementById('newGame').onclick = function() {
-                    this.blur();
-                    isRestart = true;
-                    // wait for 1 seconds to end the previous game
-                    setTimeout(function() {
-                        function down() {
-                            if(!isPause) {
-                                tetrixGround.moveTetrixDown();
-                                tetrixGround.updateGround();
-                               
-                                if(!tetrixGround.isMovable(0, 1)) { 
-                                    tetrixGround.addPieceOfType(piece.type);
-                                    piece = TetrixPiece.randomFreezePiece();
-                                    tetrixBox.paint(piece);
-                                    lineLabel.innerHTML = tetrixGround.removedLines;
-                                    scoreLabel.innerHTML = tetrixGround.score;
-                                }
-                                
-                                stackArea.paint(tetrixGround);
-                                
-                                if((tetrixGround.score / 50) > (level - 1)) {
-                                    level++;
-                                    if(speed > 200) {
-                                        speed -= 100;
-                                    }
-                                    levelLabel.innerHTML = level;
-                                }
-                            
-                                if(!tetrixGround.isGameover && !isRestart) {
-                                    setTimeout(down, speed);
-                                }
-                            }
-                        }
-                        
-                        level = 1;
-                        speed = INIT_GAME_SPEED;
-                        tetrixGround.reset();
-                        levelLabel.innerHTML = level;
+                let level;
+                let speed;
+                let timeout;
+                function gameloop() {
+                    tetrixGround.moveTetrixDown();
+                    tetrixGround.updateGround();
+                    
+                    if(!tetrixGround.isMovable(0, 1)) { 
+                        tetrixGround.copyPiece(nextPiece);
+                        nextPiece = TetrixPiece.randomFreezePiece();
+                        tetrixBox.paint(nextPiece);
                         lineLabel.innerHTML = tetrixGround.removedLines;
                         scoreLabel.innerHTML = tetrixGround.score;
-                        
-                        isRestart = false;                        
-                        down();
-                    }, 1000);
-                };
+                    }
+                    
+                    stackArea.paint(tetrixGround);
+                    
+                    if((tetrixGround.score / 50) > (level - 1)) {
+                        level++;
+                        if(speed > 200) {
+                            speed -= 100;
+                        }
+                        levelLabel.innerHTML = level;
+                    }
                 
-                document.getElementById('pause').onclick = function() {
+                    if(!tetrixGround.isGameover) {                   
+                        timeout = setTimeout(gameloop, speed);
+                    }
+                }
+                
+                function newGame() {
                     this.blur();
-                    isPause = true;
-                    alert('           Paused - https://openhome.cc');
-                    isPause = false;
+                    if(timeout) {
+                        clearTimeout(timeout);
+                    }
+                    
+                    tetrixGround.reset();
+                    level = 1;
+                    speed = INIT_GAME_SPEED;
+                    levelLabel.innerHTML = level;
+                    lineLabel.innerHTML = tetrixGround.removedLines;
+                    scoreLabel.innerHTML = tetrixGround.score;
+            
+                    gameloop();
                 };
+
+                document.getElementById('newGame').onclick = newGame;
+                
+                document.getElementById('pause').onclick = 
+                            () =>  alert('Paused - https://openhome.cc');
                 
                 document.onkeydown = function(event) {
-                    if(isRestart || tetrixGround.isGameover || isPause) {
+                    if(tetrixGround.isGameover) {
                         return;
                     }
                     

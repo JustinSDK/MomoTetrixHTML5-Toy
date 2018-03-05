@@ -155,9 +155,9 @@ class TetrixGround {
         });
     }
 
-    addPieceOfType(pieceType) {
-        this.tetrixPiece = new TetrixPiece(pieceType);
-        this.testPiece = new TetrixPiece(pieceType);
+    copyPiece(piece) {
+        this.tetrixPiece = new TetrixPiece(piece.type);
+        this.testPiece = new TetrixPiece(piece.type);
         this.xOffset = this.xblocks / 2 - 1;
         this.yOffset = this.tetrixPiece.minimumY < 0 ? Math.abs(this.tetrixPiece.minimumY) : 0;
         this.isGameover = this.tetrixPiece.blocks.some(block => {

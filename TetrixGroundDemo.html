@@ -28,7 +28,7 @@
             let piece = TetrixPiece.randomFreezePiece();
 
             let tetrixGround = new TetrixGround(GROUND_BLOCKS_X, GROUND_BLOCKS_Y);
-            tetrixGround.addPieceOfType(piece.type);
+            tetrixGround.copyPiece(piece);
 
             canvas = document.getElementById('canvas');
             canvas.width = GROUND_BLOCKS_X * BLOCK_WIDTH;
@@ -44,7 +44,7 @@
                     tetrixGround.updateGround();
                 }
                 else {
-                    tetrixGround.addPieceOfType(piece.type);
+                    tetrixGround.copyPiece(piece);
                     piece = TetrixPiece.randomFreezePiece();
                 }
                 
