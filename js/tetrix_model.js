@@ -129,22 +129,7 @@ class TetrixGround {
     constructor(xblocks = 10, yblocks = 20) {
         this.xblocks = xblocks;
         this.yblocks = yblocks;
-        this.ground = Array(xblocks)
-            .fill()
-            .map(_ => Array(yblocks).fill(0));
-
-        this.xOffset = parseInt(xblocks / 2) - 1;
-        this.yOffset = 1;
-
-        this.emptyLines = 0;
-        this.removedLines = 0;
-        this.score = 0;
-
-        this.isGameover = false;
-        this.isOperable = true;
-
-        this.tetrixPiece;
-        this.testPiece;
+        this.reset();
     }
 
     isMovable(xStep, yStep) {
@@ -170,12 +155,13 @@ class TetrixGround {
     reset() {
         this.emptyLines = 0;
         this.score = 0;
+        this.level = 1;
         this.removedLines = 0;
         this.isGameover = false;
         this.isOperable = true;
 
         this.xOffset = parseInt(this.xblocks / 2) - 1;
-        this.yOffset = this.tetrixPiece.maximumY < 0 ? Math.abs(this.tetrixPiece.minimumY) : 0;
+        this.yOffset = 0;
 
         this.ground = Array(this.xblocks)
                         .fill()
@@ -242,6 +228,10 @@ class TetrixGround {
             }
 
             removeFullLines(this);
+        }
+
+        if((this.score / 50) > (this.level - 1)) {
+            this.level++;
         }
 
         this.isOperable = true;

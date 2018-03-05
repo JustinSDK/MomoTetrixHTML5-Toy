@@ -2,138 +2,6 @@
 <html>
   <head>
     <title>Momo Tetrix</title>
-        <script type="module">
-            import {TetrixPiece, TetrixGround} from './js/tetrix_model.js';
-            import {rgb, TetrixBox, TetrixStackArea} from './js/tetrix_drawing.js';
-
-            const BLOCK_WIDTH = 25;
-            const BOK_WIDTH = 100;
-            const GROUND_BLOCKS_X = 10;
-            const GROUND_BLOCKS_Y = 20;
-            const INIT_GAME_SPEED = 1000;
-            
-            function prepare_images() {
-                let logoIcon = new Image();
-                logoIcon.src = 'images/logo.jpg';
-                document.body.appendChild(logoIcon);
-
-                let images = Array.from(document.getElementsByTagName('img'));
-                images.forEach(image => {
-                    document.body.removeChild(image);
-                });
-
-                return images;
-            }
-
-            function prepare_tetrixBox(images) {
-                let tetrixboxCanvas = document.getElementById('tetrixbox');
-                tetrixboxCanvas.width = BOK_WIDTH;
-                tetrixboxCanvas.height = BOK_WIDTH;
-                let tetrixBox = new TetrixBox(images, tetrixboxCanvas);
-                return tetrixBox;                
-            }
-
-            function prepare_tetrixStackArea(images) {
-                let stackareaCanvas = document.getElementById('stackarea');
-                stackareaCanvas.width = GROUND_BLOCKS_X * BLOCK_WIDTH;
-                stackareaCanvas.height = GROUND_BLOCKS_Y * BLOCK_WIDTH;        
-                let stackArea = new TetrixStackArea(images, stackareaCanvas);
-                return stackArea;
-            } 
-
-            window.onload = function() {       
-                let levelLabel = document.getElementById('level');
-                let lineLabel = document.getElementById('line');
-                let scoreLabel = document.getElementById('score');
-
-                let images = prepare_images();
-                let tetrixBox = prepare_tetrixBox(images);  
-                let stackArea = prepare_tetrixStackArea(images);
-
-                let nextPiece = TetrixPiece.randomFreezePiece();
-                tetrixBox.paint(nextPiece); 
-
-                let tetrixGround = new TetrixGround(10, 20);
-                tetrixGround.copyPiece(TetrixPiece.randomFreezePiece());
-                stackArea.paint(tetrixGround);
-
-                let level;
-                let speed;
-                let timeout;
-                function gameloop() {
-                    tetrixGround.moveTetrixDown();
-                    tetrixGround.updateGround();
-                    
-                    if(!tetrixGround.isMovable(0, 1)) { 
-                        tetrixGround.copyPiece(nextPiece);
-                        nextPiece = TetrixPiece.randomFreezePiece();
-                        tetrixBox.paint(nextPiece);
-                        lineLabel.innerHTML = tetrixGround.removedLines;
-                        scoreLabel.innerHTML = tetrixGround.score;
-                    }
-                    
-                    stackArea.paint(tetrixGround);
-                    
-                    if((tetrixGround.score / 50) > (level - 1)) {
-                        level++;
-                        if(speed > 200) {
-                            speed -= 100;
-                        }
-                        levelLabel.innerHTML = level;
-                    }
-                
-                    if(!tetrixGround.isGameover) {                   
-                        timeout = setTimeout(gameloop, speed);
-                    }
-                }
-                
-                function newGame() {
-                    this.blur();
-                    if(timeout) {
-                        clearTimeout(timeout);
-                    }
-                    
-                    tetrixGround.reset();
-                    level = 1;
-                    speed = INIT_GAME_SPEED;
-                    levelLabel.innerHTML = level;
-                    lineLabel.innerHTML = tetrixGround.removedLines;
-                    scoreLabel.innerHTML = tetrixGround.score;
-            
-                    gameloop();
-                };
-
-                document.getElementById('newGame').onclick = newGame;
-                
-                document.getElementById('pause').onclick = 
-                            () =>  alert('Paused - https://openhome.cc');
-                
-                document.onkeydown = function(event) {
-                    if(tetrixGround.isGameover) {
-                        return;
-                    }
-                    
-                    switch (event.which) {
-                        case 39: // Right
-                            tetrixGround.moveTetrixRight()
-                            break;
-                        case 37: // Left
-                            tetrixGround.moveTetrixLeft();
-                            break;
-                       case 38: // Up
-                            tetrixGround.rotateTetrix(false);
-                            break;
-                       case 40: // Down
-                            tetrixGround.rotateTetrix(true);
-                            break;
-                       case 32: // Space
-                            tetrixGround.dropTetrix();
-                            break;
-                    }
-                    stackArea.paint(tetrixGround);
-                };
-            };
-        </script>
     <meta charset="UTF-8">
   </head>
   <body>
@@ -145,7 +13,7 @@
       id="tetrixbox" style="border-style: solid; border-width: 1px; margin-left: 10px; padding-top: 5px; padding-left: 5px;"></canvas><br>
     <br>
     　　Level : <span id="level">0</span><br>
-    　　Lines : <span id="line">0</span><br>
+    　　Lines : <span id="lines">0</span><br>
     　　Score : <span id="score">0</span><br>
     <br>
     　<button id="newGame">New Game</button><br>
@@ -156,5 +24,133 @@
       src="images/4.jpg"> <img src="images/5.jpg"> <img src="images/6.jpg"> <img
 
       src="images/7.jpg">
+
+    <script type="module">
+        import {TetrixPiece, TetrixGround} from './js/tetrix_model.js';
+        import {rgb, TetrixBox, TetrixStackArea} from './js/tetrix_drawing.js';
+
+        const BLOCK_WIDTH = 25;
+        const BOK_WIDTH = 100;
+        const GROUND_BLOCKS_X = 10;
+        const GROUND_BLOCKS_Y = 20;
+        const INIT_GAME_SPEED = 1000;
+        
+        function prepare_images() {
+            let logoIcon = new Image();
+            logoIcon.src = 'images/logo.jpg';
+            document.body.appendChild(logoIcon);
+
+            let images = Array.from(document.getElementsByTagName('img'));
+            images.forEach(image => {
+                document.body.removeChild(image);
+            });
+
+            return images;
+        }
+
+        function prepare_tetrixBox(images) {
+            let tetrixboxCanvas = document.getElementById('tetrixbox');
+            tetrixboxCanvas.width = BOK_WIDTH;
+            tetrixboxCanvas.height = BOK_WIDTH;
+            let tetrixBox = new TetrixBox(images, tetrixboxCanvas);
+            return tetrixBox;                
+        }
+
+        function prepare_tetrixStackArea(images) {
+            let stackareaCanvas = document.getElementById('stackarea');
+            stackareaCanvas.width = GROUND_BLOCKS_X * BLOCK_WIDTH;
+            stackareaCanvas.height = GROUND_BLOCKS_Y * BLOCK_WIDTH;        
+            let stackArea = new TetrixStackArea(images, stackareaCanvas);
+            return stackArea;
+        } 
+  
+        function updateDashboard(level, lines, score) {
+            document.getElementById('level').innerHTML = level;
+            document.getElementById('lines').innerHTML = lines;
+            document.getElementById('score').innerHTML = score;
+        }
+
+        let images = prepare_images();
+
+        let tetrixBox = prepare_tetrixBox(images);  
+        let stackArea = prepare_tetrixStackArea(images);
+
+        let nextPiece = TetrixPiece.randomFreezePiece();
+        tetrixBox.paint(nextPiece); 
+
+        let tetrixGround = new TetrixGround(10, 20);
+        tetrixGround.copyPiece(TetrixPiece.randomFreezePiece());
+        stackArea.paint(tetrixGround);
+
+        let speed;
+        let timeout = setTimeout(() => {}, 0);
+
+        function newGame() {
+            this.blur();
+            clearTimeout(timeout);
+            
+            tetrixGround.reset();
+            speed = INIT_GAME_SPEED;
+            updateDashboard(tetrixGround.level, tetrixGround.removedLines, tetrixGround.score);
+    
+            gameloop();
+        };
+
+        function gameloop() {
+            let level = tetrixGround.level;
+
+            tetrixGround.moveTetrixDown();
+            tetrixGround.updateGround();         
+            
+            if(!tetrixGround.isMovable(0, 1)) { 
+                tetrixGround.copyPiece(nextPiece);
+                nextPiece = TetrixPiece.randomFreezePiece();
+                tetrixBox.paint(nextPiece);
+            }
+
+            updateDashboard(tetrixGround.level, tetrixGround.removedLines, tetrixGround.score);
+            stackArea.paint(tetrixGround);               
+            
+            if(tetrixGround.level > level &&　speed > 200) {
+                speed -= 100;
+            }
+
+            if(!tetrixGround.isGameover) {                   
+                timeout = setTimeout(gameloop, speed);
+            }
+        }
+        
+        // events
+        document.getElementById('newGame').onclick = newGame;
+        
+        document.getElementById('pause').onclick = 
+                    () =>  alert('Paused - https://openhome.cc');
+        
+        document.onkeydown = function(event) {
+            if(tetrixGround.isGameover) {
+                return;
+            }
+            
+            switch (event.which) {
+                case 39: // Right
+                    tetrixGround.moveTetrixRight()
+                    break;
+                case 37: // Left
+                    tetrixGround.moveTetrixLeft();
+                    break;
+                case 38: // Up
+                    tetrixGround.rotateTetrix(false);
+                    break;
+                case 40: // Down
+                    tetrixGround.rotateTetrix(true);
+                    break;
+                case 32: // Space
+                    tetrixGround.dropTetrix();
+                    break;
+            }
+
+            stackArea.paint(tetrixGround);
+        };
+    </script>      
   </body>
 </html>
