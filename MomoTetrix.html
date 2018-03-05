@@ -123,8 +123,10 @@
         // events
         document.getElementById('newGame').onclick = newGame;
         
-        document.getElementById('pause').onclick = 
-                    () =>  alert('Paused - https://openhome.cc');
+        document.getElementById('pause').onclick = function() {
+            alert('Paused - https://openhome.cc');
+            this.blur();
+        }
         
         document.onkeydown = function(event) {
             if(tetrixGround.isGameover) {
