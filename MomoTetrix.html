@@ -41,7 +41,11 @@
                 return stackArea;
             } 
 
-            window.onload = function() {        
+            window.onload = function() {       
+                let levelLabel = document.getElementById('level');
+                let lineLabel = document.getElementById('line');
+                let scoreLabel = document.getElementById('score');
+
                 let images = prepare_images();
                 let tetrixBox = prepare_tetrixBox(images);  
                 let stackArea = prepare_tetrixStackArea(images);
@@ -52,11 +56,6 @@
                 let tetrixGround = new TetrixGround(10, 20);
                 tetrixGround.copyPiece(TetrixPiece.randomFreezePiece());
                 stackArea.paint(tetrixGround);
-
-                // GAME
-                let levelLabel = document.getElementById('level');
-                let lineLabel = document.getElementById('line');
-                let scoreLabel = document.getElementById('score');
 
                 let level;
                 let speed;
