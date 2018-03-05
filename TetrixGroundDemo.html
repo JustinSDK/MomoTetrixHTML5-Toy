@@ -8,10 +8,10 @@
         <script type="module">
             import {TetrixPiece, TetrixGround} from './js/tetrix_model.js';
             import {rgb, TetrixBox, TetrixStackArea} from './js/tetrix_drawing.js';
-            const blockWidth = 25;
-            const boxWidth = 100;
-            const groundBlocksX = 10;
-            const groundBlocksY = 20;
+            const BLOCK_WIDTH = 25;
+            const BOX_WIDTH = 100;
+            const GROUND_BLOCKS_X = 10;
+            const GROUND_BLOCKS_Y = 20;
 
             let images = [];
             for(let i = 0; i < 7; i++) {
@@ -20,19 +20,19 @@
             }
 
             let canvas = document.createElement('canvas');
-            canvas.width = boxWidth;
-            canvas.height = boxWidth;        
+            canvas.width = BOX_WIDTH;
+            canvas.height = BOX_WIDTH;        
             let tetrixBox = new TetrixBox(images, canvas);
             tetrixBox.backgroundColor = rgb(0, 0, 0);
     
             let piece = TetrixPiece.randomFreezePiece();
 
-            let tetrixGround = new TetrixGround(groundBlocksX, groundBlocksY);
+            let tetrixGround = new TetrixGround(GROUND_BLOCKS_X, GROUND_BLOCKS_Y);
             tetrixGround.addPieceOfType(piece.type);
 
             canvas = document.getElementById('canvas');
-            canvas.width = groundBlocksX * blockWidth;
-            canvas.height = groundBlocksY * blockWidth;
+            canvas.width = GROUND_BLOCKS_X * BLOCK_WIDTH;
+            canvas.height = GROUND_BLOCKS_Y * BLOCK_WIDTH;
 
             let stackArea = new TetrixStackArea(images, canvas);
             
